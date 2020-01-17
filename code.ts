@@ -1,13 +1,10 @@
-// This plugin will open a modal to prompt the user to enter a number, and
-// it will then create that many rectangles on the screen.
+import { color, hsl } from "d3-color";
+import { scaleLinear } from "d3-scale";
 
 figma.showUI(__html__);
 
-// Calls to "parent.postMessage" from within the HTML page will trigger this
-// callback. The callback will be passed the "pluginMessage" property of the
-// posted message.
 figma.ui.onmessage = msg => {
-  console.log("GENERATING STEPS", msg);
+  console.log("GENERATING STEPSz", scaleLinear, color, hsl);
 
   // One way of distinguishing between different types of messages sent from
   // your HTML page is to use an object with a "type" property like this.
