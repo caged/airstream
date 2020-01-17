@@ -1,0 +1,19 @@
+<h2>Color Steps Generator</h2>
+<input type="number" id="count" />
+<button id="create">Generate</button>
+<button id="cancel">Cancel</button>
+<script>
+
+  document.getElementById('create').onclick = () => {
+    const textbox = document.getElementById('count');
+    const count = 10
+    parent.postMessage({ pluginMessage: { type: 'generate-steps', count } }, '*')
+  }
+
+  document.getElementById('cancel').onclick = () => {
+
+
+    parent.postMessage({ pluginMessage: { type: 'cancel' } }, '*')
+  }
+
+</script>
