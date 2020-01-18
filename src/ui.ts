@@ -3,7 +3,8 @@ import './ui.css';
 document.getElementById('create').onclick = () => {
   const textbox = document.getElementById('count') as HTMLInputElement;
   const count = parseInt(textbox.value, 10);
-  parent.postMessage({ pluginMessage: { type: 'generate-steps', count } }, '*');
+
+  parent.postMessage({ pluginMessage: { type: 'generate', count } }, '*');
 };
 
 document.getElementById('cancel').onclick = () => {

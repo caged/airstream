@@ -22,8 +22,7 @@ button {
 }
 
 input {
-  border: none;
-  outline: none;
+  border: 1px solid #eee;
   padding: 8px;
 }
 
