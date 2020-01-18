@@ -1,15 +1,14 @@
 import { scaleLinear } from 'd3-scale';
 import { rgb } from 'd3-color';
 
-figma.showUI(__html__);
+figma.showUI(__html__, { width: 400, height: 300 });
 
+// TODO: https://github.com/typescript-eslint/typescript-eslint/issues/1197
 enum AllowedTypes {
-  ELLIPSE,
-  RECTANGLE,
-  POLYGON
+  ELLIPSE, // eslint-disable-line no-unused-vars
+  RECTANGLE, // eslint-disable-line no-unused-vars
+  POLYGON // eslint-disable-line no-unused-vars
 }
-
-// const scale = scaleLinear().domain([0, 0.4, 0.8]);
 
 const getFirstFill = (shape) => {
   const solids = (shape as GeometryMixin).fills as ReadonlyArray<Paint>;
@@ -28,10 +27,7 @@ const generateColorSteps = () => {
   for (const shape of selection) {
     if (isAllowedShape(shape)) {
       const fill = getFirstFill(shape);
-      fills.push({
-        name: shape.name,
-        color: fill.color,
-      });
+      fills.push(fill.color);
     }
   }
 
@@ -43,18 +39,19 @@ figma.ui.onmessage = ({ type, count }) => {
     const stepCount = count - 1;
     const size = 50;
     const nodes = [];
-    const steps = generateColorSteps();
-    const colors = steps.map((f) => f.color);
-    const domain = steps.map((_, i) => (i === 0 ? 0 : stepCount / i)).sort();
+
+    const colors = generateColorSteps();
+    const domain = colors.map((_, i) => (i === 0 ? 0 : stepCount / i)).sort();
 
     const scale = scaleLinear()
       .domain(domain)
-      .range(colors);
+      .range(colors) as any;
 
     for (let i = 0; i <= stepCount; i += 1) {
       const color = scale(i);
       const { r, g, b } = color;
       const hex = rgb(r * 255, g * 255, b * 255).hex();
+
       const rect = figma.createRectangle();
       const fills = clone(rect.fills);
 
@@ -76,7 +73,6 @@ figma.ui.onmessage = ({ type, count }) => {
     figma.viewport.scrollAndZoomIntoView(nodes);
   }
 
-  // Make sure to close the plugin when you're done. Otherwise the plugin will
-  // keep running, which shows the cancel button at the bottom of the screen.
+
   figma.closePlugin();
 };
