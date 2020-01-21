@@ -4,7 +4,8 @@ module.exports = {
     es6: true,
   },
   extends: [
-    'airbnb-base',
+    'eslint:recommended',
+    'plugin:react/recommended'
   ],
   globals: {
     Atomics: 'readonly',
@@ -18,7 +19,8 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: [
-    '@typescript-eslint',
+    '@typescript-eslint',,
+    'react'
   ],
   rules: {
     'no-restricted-syntax': [
