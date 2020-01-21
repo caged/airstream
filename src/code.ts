@@ -1,5 +1,6 @@
-import { scaleLinear } from 'd3-scale';
+import { scaleLinear, scaleSequential } from 'd3-scale';
 import { rgb } from 'd3-color';
+import * as scales from 'd3-scale-chromatic';
 
 figma.showUI(__html__, { width: 400, height: 300 });
 
@@ -34,10 +35,34 @@ const generateColorSteps = () => {
   return fills;
 };
 
-figma.ui.onmessage = ({ type, count }) => {
-  if (type === 'generate') {
+const createRect = (width, height, fill) => {
+  const rect = figma.createRectangle();
+  const fills = clone(rect.fills);
+
+  rect.resize(width, height);
+  fills[0].color = fill;
+  rect.fills = fills;
+
+  return rect;
+};
+
+const figmaColorInterpolator = (d3Interpolator) => {
+  const interpolator = scales[d3Interpolator];
+  return (t) => {
+    const c = interpolator(t);
+    const { r, g, b } = rgb(c);
+    return { r: r / 255, g: g / 255, b: b / 255 };
+  };
+};
+
+const hexFromFigmaColor = ({ r, g, b }) => rgb(r * 255, g * 255, b * 255).hex();
+
+figma.ui.onmessage = ({ type, ...props }) => {
+  const size = 50;
+
+  if (type === 'generate-fill-blend') {
+    const { count } = props;
     const stepCount = count - 1;
-    const size = 50;
     const nodes = [];
 
     const colors = generateColorSteps();
@@ -49,16 +74,10 @@ figma.ui.onmessage = ({ type, count }) => {
 
     for (let i = 0; i <= stepCount; i += 1) {
       const color = scale(i);
-      const { r, g, b } = color;
-      const hex = rgb(r * 255, g * 255, b * 255).hex();
+      const hex = hexFromFigmaColor(color);
 
-      const rect = figma.createRectangle();
-      const fills = clone(rect.fills);
+      const rect = createRect(size, size, color);
 
-      fills[0].color = color;
-      rect.fills = fills;
-
-      rect.resize(size, size);
       rect.x = i * size + (i * size) / 3;
       rect.cornerRadius = 3;
       rect.name = hex;
@@ -68,9 +87,30 @@ figma.ui.onmessage = ({ type, count }) => {
     }
 
     figma.currentPage.selection = nodes;
+    figma.viewport.scrollAndZoomIntoView(nodes);
+
     const group = figma.group(figma.currentPage.selection, figma.currentPage);
     group.name = 'Colors';
+  }
+
+  if (type === 'generate-palette-steps') {
+    const nodes = [];
+    const { interpolator, steps } = props;
+    const scale = scaleSequential(figmaColorInterpolator(interpolator)).domain([0, steps]);
+
+    for (let i = 0; i < steps; i++) {
+      const color = scale(i);
+      const rect = createRect(size, size, color);
+      rect.x = i * size + (i * size) / 3;
+      rect.cornerRadius = 3;
+      nodes.push(rect);
+    }
+
+    figma.currentPage.selection = nodes;
     figma.viewport.scrollAndZoomIntoView(nodes);
+
+    const group = figma.group(figma.currentPage.selection, figma.currentPage);
+    group.name = `${steps} ${interpolator} colors`;
   }
 
 
