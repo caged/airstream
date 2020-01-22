@@ -1,14 +1,17 @@
 import * as React from 'react'
-import { useForm, useFieldArray } from 'react-hook-form'
+import { useForm, useFieldArray, FormContext } from 'react-hook-form'
+import ColorFillArrayInput from './ColorFillArrayInput'
 
 const SwatchTransitionComponent: React.FC = () => {
   const defaultColor = '#23ABD8'
 
-  const { handleSubmit, setValue, register, control, errors } = useForm({
+  const methods = useForm({
     defaultValues: {
       fill: [{ color: defaultColor }, { color: defaultColor }],
     },
   })
+
+  const { handleSubmit, setValue, register, control, errors } = methods
 
   const { fields, append, remove } = useFieldArray({
     control,
@@ -92,78 +95,82 @@ const SwatchTransitionComponent: React.FC = () => {
         steps.
       </p>
 
-      {errors.steps && <p>Steps is required</p>}
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="form-row">
-          <div className="icon-input" onClick={focusInput}>
-            <label htmlFor="steps">Steps</label>
-            <input
-              className="steps ml-1 mr-2"
-              name="steps"
-              type="number"
-              min={2}
-              max={99}
-              ref={register({ required: true })}
-              defaultValue={3}
-              onBlur={unfocusInput}
-            />
+      <FormContext {...methods}>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="form-row">
+            <div className="icon-input" onClick={focusInput}>
+              <label htmlFor="steps">Steps</label>
+              <input
+                className="steps ml-1 mr-2"
+                name="steps"
+                type="number"
+                min={2}
+                max={99}
+                ref={register({ required: true })}
+                defaultValue={3}
+                onBlur={unfocusInput}
+              />
+            </div>
           </div>
-        </div>
-        <div className="form-row">
-          {fields.map((item, index) => {
-            return (
-              <div key={item.id} className="form-row-item">
-                <div className="flex-1">
-                  <div className="color-input">
-                    <input
-                      type="color"
-                      name={`fill[${index}].color`}
-                      defaultValue={item.color}
-                      ref={register}
-                      onChange={handleChange}
-                      data-index={index}
-                    />
-                    <input
-                      type="text"
-                      size={7}
-                      defaultValue={defaultColor.replace(/#/, '')}
-                      ref={register}
-                      name={`fill[${index}].name`}
-                      onChange={handleChange}
-                      onFocus={handleFocus}
-                      data-index={index}
-                      maxLength={6}
-                    />
+          <div className="form-row">
+            <ColorFillArrayInput name="fill" />
+          </div>
+          <div className="form-row">
+            {/* {fields.map((item, index) => {
+              return (
+                <div key={item.id} className="form-row-item">
+                  <div className="flex-1">
+                    <div className="color-input">
+                      <input
+                        type="color"
+                        name={`fill[${index}].color`}
+                        defaultValue={item.color}
+                        ref={register}
+                        onChange={handleChange}
+                        data-index={index}
+                      />
+                      <input
+                        type="text"
+                        size={7}
+                        defaultValue={defaultColor.replace(/#/, '')}
+                        ref={register}
+                        name={`fill[${index}].name`}
+                        onChange={handleChange}
+                        onFocus={handleFocus}
+                        data-index={index}
+                        maxLength={6}
+                      />
+                    </div>
+                  </div>
+                  <div className="actions flex-shrink">
+                    {fields.length > 2 && index >= 2 && (
+                      <button
+                        className="btn-icon minus"
+                        onClick={() => remove(index)}
+                      >
+                        <svg height="1" width="12">
+                          <line
+                            x1="0"
+                            y1="0"
+                            x2="12"
+                            y2="0"
+                            style={{
+                              lineWidth: 1,
+                              stroke: '#111111',
+                              shapeRendering: 'crisp-edges',
+                            }}
+                          />
+                        </svg>
+                      </button>
+                    )}
                   </div>
                 </div>
-                <div className="actions flex-shrink">
-                  {fields.length > 2 && index >= 2 && (
-                    <button
-                      className="btn-icon minus"
-                      onClick={() => remove(index)}
-                    >
-                      <svg height="1" width="12">
-                        <line
-                          x1="0"
-                          y1="0"
-                          x2="12"
-                          y2="0"
-                          style={{
-                            lineWidth: 1,
-                            stroke: '#111111',
-                            shapeRendering: 'crisp-edges',
-                          }}
-                        />
-                      </svg>
-                    </button>
-                  )}
-                </div>
-              </div>
-            )
-          })}
-        </div>
-        <input type="submit" value="Submit" className="btn-primary" />
-      </form>
+              )
+            })} */}
+          </div>
+          <input type="submit" value="Submit" className="btn-primary" />
+        </form>
+      </FormContext>
     </div>
   )
 }
