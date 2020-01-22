@@ -1,3 +1,4 @@
+/* General */
 body {
   margin: 0;
   padding: 0;
@@ -37,16 +38,9 @@ button {
   outline: none;
 }
 
-label {
-  font-weight: bold;
-}
-
-h2 {
-  font-size: 0.7rem;
-  font-weight: bold;
-  color: #444;
-  padding: 0 0 5px 0;
+p {
   margin: 0;
+  padding: 0;
 }
 
 .float-right {
@@ -71,51 +65,6 @@ h2 {
 
 .flex-shrink {
   flex-shrink: 1;
-}
-
-.plugin-body {
-  padding: 10px;
-}
-
-.form-row {
-  padding: 5px 0;
-}
-
-.form-row:first-child {
-  padding-top: 0;
-}
-
-.form-row:last-child {
-  padding-bottom: 0;
-}
-
-.form-row-item {
-  line-height: 0;
-  padding: 0;
-  display: flex;
-}
-
-.color-input {
-  border: 1px solid #fff;
-  border-radius: 2px;
-  padding: 3px;
-  display: inline-block;
-}
-
-.color-input input[type='text'] {
-  line-height: 0;
-  vertical-align: top;
-  margin: 1px 5px 0 5px;
-  border: 0;
-  outline: none;
-}
-
-.color-input input[type='text']:focus {
-  outline: none;
-}
-
-.color-input:hover {
-  border-color: #e1e1e1;
 }
 
 .p-2 {
@@ -198,14 +147,91 @@ h2 {
   margin-left: 1.5rem;
 }
 
+/* Components */
+
+.plugin-body {
+  padding: 8px 15px 15px 15px;
+}
+
+.form-row {
+  padding: 5px 0;
+}
+
+.form-row:first-child {
+  padding-top: 0;
+}
+
+.form-row:last-child {
+  padding-bottom: 0;
+}
+
+.form-row-item {
+  line-height: 0;
+  padding: 0;
+  display: flex;
+}
+
+.color-input {
+  border: 1px solid #fff;
+  border-radius: 2px;
+  padding: 3px;
+  display: inline-block;
+}
+
+.color-input input[type='text'] {
+  line-height: 0;
+  vertical-align: top;
+  margin: 1px 5px 0 5px;
+  border: 0;
+  outline: none;
+}
+
+.color-input input[type='text']:focus {
+  outline: none;
+}
+
+.color-input:hover {
+  border-color: #e1e1e1;
+}
+
+.icon-input {
+  border: 1px solid #fff;
+  border-radius: 2px;
+  padding: 3px;
+}
+
+.icon-input:hover {
+  border-color: #e1e1e1;
+}
+
+.icon-input.focused {
+  border-color: #18a0fb;
+}
+
+.icon-input label {
+  text-transform: uppercase;
+  letter-spacing: 0.06rem;
+  color: #b3b3b3;
+}
+
+.icon-input input {
+  border: none;
+  padding: 5px 5px 5px 5px;
+}
+
+.icon-input input:focus {
+  outline: none;
+}
+
 .border-bottom {
   border-bottom: 1px solid #edf2f7;
 }
 
-.button-primary {
-  box-shadow: none;
-  background: #18a0fb;
-  color: white;
+.btn-primary {
+  border: 1px solid #18a0fb;
+  border-radius: 3px;
+  color: #18a0fb;
+  padding: 6px 12px;
 }
 
 .btn-icon {
@@ -223,12 +249,16 @@ h2 {
   background: #eee;
 }
 
-.icon-input {
-  border: none;
-  padding: 5px 5px 5px 25px;
-  /* background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path fill="%23777" d="M337.46 272c-34.91 0-76.16 14.06-104.73 34.29-24.79 17.55-44.52 34.29-104.73 34.29H64c-35.35 0-64 30.7-64 68.57S28.65 480 64 480h64l57.53 14.82C217.42 504.3 250.17 512 293.3 512 403.84 512 512 456.84 512 374.86 512 306.29 427.82 272 337.46 272zM112 448H64c-17.05 0-32-18.16-32-38.86 0-20.17 14.36-36.57 32-36.57h48V448zm81.51 15.84L144 451.08v-79.11c55.33-2.95 80.75-20.66 103.08-36.62C338.33 270.38 480 316.73 480 374.86c0 62.15-121.49 137.92-286.49 88.98zM421.29 0c-43.42 0-76.17 7.78-107.77 17.17L256 32h-64c-35.35 0-64 32.98-64 70.86 0 37.87 28.65 68.57 64 68.57h64c60.2 0 79.94 16.73 104.73 34.29C389.3 225.94 430.54 240 465.46 240 555.82 240 640 205.71 640 137.14 640 55.84 533.12 0 421.29 0zM240 139.43h-48c-17.64 0-32-16.4-32-36.57C160 82.16 174.95 64 192 64h48v75.43zM465.46 208c-27.58 0-62.24-11.41-86.24-28.4-23.71-16.89-48.76-36.45-107.22-39.56V60.92l50.65-13.07C352.05 39.1 381.72 32 421.29 32 473.38 32 608 58.02 608 137.14c0 46.52-71.71 70.86-142.54 70.86z"/></svg>')
-    5px center no-repeat; */
-  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path fill="%23777" d="M192 160h32V32h-32c-35.35 0-64 28.65-64 64s28.65 64 64 64zM0 416c0 35.35 28.65 64 64 64h32V352H64c-35.35 0-64 28.65-64 64zm337.46-128c-34.91 0-76.16 13.12-104.73 32-24.79 16.38-44.52 32-104.73 32v128l57.53 15.97c26.21 7.28 53.01 13.12 80.31 15.05 32.69 2.31 65.6.67 97.58-6.2C472.9 481.3 512 429.22 512 384c0-64-84.18-96-174.54-96zM491.42 7.19C459.44.32 426.53-1.33 393.84.99c-27.3 1.93-54.1 7.77-80.31 15.04L256 32v128c60.2 0 79.94 15.62 104.73 32 28.57 18.88 69.82 32 104.73 32C555.82 224 640 192 640 128c0-45.22-39.1-97.3-148.58-120.81z"/></svg>')
-    5px center no-repeat;
-  background-size: 15px 15px;
+.section-title {
+  font-size: 0.7rem;
+  font-weight: bold;
+  color: #444;
+  padding: 8px 0 0 0;
+  margin: 0 0 3px 0;
+  vertical-align: middle;
+}
+
+.info {
+  color: #888;
+  margin-bottom: 10px;
 }

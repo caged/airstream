@@ -38,10 +38,25 @@ const SwatchTransitionComponent: React.FC = () => {
     event.target.select()
   }
 
+  const focusInput = (event) => {
+    const { target } = event
+    const input = target.querySelector('input')
+    target.classList.add('focused')
+
+    if (input) {
+      input.focus()
+      input.select()
+    }
+  }
+
+  const unfocusInput = (event) => {
+    event.target.parentNode.classList.remove('focused')
+  }
+
   return (
     <div className="plugin-body">
       <div className="flex">
-        <h2 className="flex-1">Swatch Blend</h2>
+        <h2 className="section-title flex-1">Swatch Blend</h2>
         <button
           className="btn-icon plus"
           onClick={() => append({ color: defaultColor })}
@@ -72,19 +87,27 @@ const SwatchTransitionComponent: React.FC = () => {
           </svg>
         </button>
       </div>
+      <p className="info">
+        Create a blended palette from a list of fills using the given number of
+        steps.
+      </p>
 
       {errors.steps && <p>Steps is required</p>}
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="form-row">
-          <input
-            className="icon-input steps ml-1 mr-2"
-            name="steps"
-            type="number"
-            min={2}
-            max={99}
-            ref={register({ required: true })}
-            defaultValue={3}
-          />
+          <div className="icon-input" onClick={focusInput}>
+            <label htmlFor="steps">Steps</label>
+            <input
+              className="steps ml-1 mr-2"
+              name="steps"
+              type="number"
+              min={2}
+              max={99}
+              ref={register({ required: true })}
+              defaultValue={3}
+              onBlur={unfocusInput}
+            />
+          </div>
         </div>
         <div className="form-row">
           {fields.map((item, index) => {
@@ -139,7 +162,7 @@ const SwatchTransitionComponent: React.FC = () => {
             )
           })}
         </div>
-        <input type="submit" value="Submit" />
+        <input type="submit" value="Submit" className="btn-primary" />
       </form>
     </div>
   )
