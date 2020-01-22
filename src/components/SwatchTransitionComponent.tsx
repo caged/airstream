@@ -16,7 +16,7 @@ const SwatchTransitionComponent: React.FC = () => {
   })
 
   const onSubmit = (data) => {
-    console.log(data)
+    parent.postMessage({ pluginMessage: { data } }, '*')
   }
 
   const handleChange = (event) => {

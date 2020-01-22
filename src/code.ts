@@ -5,7 +5,7 @@ import * as scales from 'd3-scale-chromatic'
 figma.showUI(__html__, { width: 250, height: 300 })
 
 figma.ui.onmessage = (args) => {
-  console.log(args)
+  console.log('HELLO', args)
 }
 
 // // TODO: https://github.com/typescript-eslint/typescript-eslint/issues/1197
