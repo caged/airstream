@@ -34,52 +34,110 @@ const SwatchTransitionComponent: React.FC = () => {
     }
   }
 
+  const handleFocus = (event) => {
+    event.target.select()
+  }
+
   return (
-    <div>
+    <div className="plugin-body">
+      <div className="flex">
+        <h2 className="flex-1">Swatch Blend</h2>
+        <button
+          className="btn-icon plus"
+          onClick={() => append({ color: defaultColor })}
+        >
+          <svg height="12" width="12">
+            <line
+              x1="0"
+              y1="6"
+              x2="12"
+              y2="6"
+              style={{
+                lineWidth: 2,
+                stroke: '#333333',
+                shapeRendering: 'crisp-edges',
+              }}
+            />
+            <line
+              x1="6"
+              y1="0"
+              x2="6"
+              y2="12"
+              style={{
+                lineWidth: 2,
+                stroke: '#333333',
+                shapeRendering: 'crisp-edges',
+              }}
+            />
+          </svg>
+        </button>
+      </div>
+
       {errors.steps && <p>Steps is required</p>}
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="form-row">
-          <label htmlFor="steps">Steps</label>
           <input
+            className="icon-input steps ml-1 mr-2"
             name="steps"
             type="number"
+            min={2}
+            max={99}
             ref={register({ required: true })}
+            defaultValue={3}
           />
         </div>
-        <div>
+        <div className="form-row">
           {fields.map((item, index) => {
             return (
-              <div key={item.id}>
-                <div className="color-input">
-                  <input
-                    type="color"
-                    name={`fill[${index}].color`}
-                    defaultValue={item.color}
-                    ref={register}
-                    onChange={handleChange}
-                    data-index={index}
-                  />
-                  <input
-                    type="text"
-                    defaultValue={defaultColor.replace(/#/, '')}
-                    ref={register}
-                    name={`fill[${index}].hex`}
-                    onChange={handleChange}
-                    data-index={index}
-                    maxLength={6}
-                  />
+              <div key={item.id} className="form-row-item">
+                <div className="flex-1">
+                  <div className="color-input">
+                    <input
+                      type="color"
+                      name={`fill[${index}].color`}
+                      defaultValue={item.color}
+                      ref={register}
+                      onChange={handleChange}
+                      data-index={index}
+                    />
+                    <input
+                      type="text"
+                      size={7}
+                      defaultValue={defaultColor.replace(/#/, '')}
+                      ref={register}
+                      name={`fill[${index}].hex`}
+                      onChange={handleChange}
+                      onFocus={handleFocus}
+                      data-index={index}
+                      maxLength={6}
+                    />
+                  </div>
                 </div>
-                {fields.length > 2 && index >= 2 && (
-                  <button onClick={() => remove(index)}>-</button>
-                )}
+                <div className="actions flex-shrink">
+                  {fields.length > 2 && index >= 2 && (
+                    <button
+                      className="btn-icon minus"
+                      onClick={() => remove(index)}
+                    >
+                      <svg height="1" width="12">
+                        <line
+                          x1="0"
+                          y1="0"
+                          x2="12"
+                          y2="0"
+                          style={{
+                            lineWidth: 1,
+                            stroke: '#111111',
+                            shapeRendering: 'crisp-edges',
+                          }}
+                        />
+                      </svg>
+                    </button>
+                  )}
+                </div>
               </div>
             )
           })}
-        </div>
-        <div>
-          <button type="button" onClick={() => append({ color: defaultColor })}>
-            append
-          </button>
         </div>
         <input type="submit" value="Submit" />
       </form>
