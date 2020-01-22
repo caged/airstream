@@ -23,7 +23,7 @@ const SwatchTransitionComponent: React.FC = () => {
     const { type, value, dataset } = event.target
     const index = dataset.index
     const isColorChange = type === 'color'
-    const name = isColorChange ? `fill[${index}].hex` : `fill[${index}].color`
+    const name = isColorChange ? `fill[${index}].name` : `fill[${index}].color`
 
     if (isColorChange || value.length > 5) {
       const val = (isColorChange
@@ -128,7 +128,7 @@ const SwatchTransitionComponent: React.FC = () => {
                       size={7}
                       defaultValue={defaultColor.replace(/#/, '')}
                       ref={register}
-                      name={`fill[${index}].hex`}
+                      name={`fill[${index}].name`}
                       onChange={handleChange}
                       onFocus={handleFocus}
                       data-index={index}
