@@ -4,116 +4,120 @@ import * as scales from 'd3-scale-chromatic'
 
 figma.showUI(__html__, { width: 250, height: 300 })
 
-// TODO: https://github.com/typescript-eslint/typescript-eslint/issues/1197
-enum AllowedTypes {
-  ELLIPSE, // eslint-disable-line no-unused-vars
-  RECTANGLE, // eslint-disable-line no-unused-vars
-  POLYGON, // eslint-disable-line no-unused-vars
+figma.ui.onmessage = (args) => {
+  console.log(args)
 }
 
-const getFirstFill = (shape) => {
-  const solids = (shape as GeometryMixin).fills as ReadonlyArray<Paint>
-  return solids.find((s) => s.type === 'SOLID') as SolidPaint
-}
+// // TODO: https://github.com/typescript-eslint/typescript-eslint/issues/1197
+// enum AllowedTypes {
+//   ELLIPSE, // eslint-disable-line no-unused-vars
+//   RECTANGLE, // eslint-disable-line no-unused-vars
+//   POLYGON, // eslint-disable-line no-unused-vars
+// }
 
-const isAllowedShape = (shape): boolean =>
-  (AllowedTypes[shape.type] as unknown) <= AllowedTypes.POLYGON
+// const getFirstFill = (shape) => {
+//   const solids = (shape as GeometryMixin).fills as ReadonlyArray<Paint>
+//   return solids.find((s) => s.type === 'SOLID') as SolidPaint
+// }
 
-const clone = (val) => JSON.parse(JSON.stringify(val))
+// const isAllowedShape = (shape): boolean =>
+//   (AllowedTypes[shape.type] as unknown) <= AllowedTypes.POLYGON
 
-const generateColorSteps = () => {
-  const { selection } = figma.currentPage
-  const fills = []
-  for (const shape of selection) {
-    if (isAllowedShape(shape)) {
-      const fill = getFirstFill(shape)
-      fills.push(fill.color)
-    }
-  }
+// const clone = (val) => JSON.parse(JSON.stringify(val))
 
-  return fills
-}
+// const generateColorSteps = () => {
+//   const { selection } = figma.currentPage
+//   const fills = []
+//   for (const shape of selection) {
+//     if (isAllowedShape(shape)) {
+//       const fill = getFirstFill(shape)
+//       fills.push(fill.color)
+//     }
+//   }
 
-const createRect = (width, height, fill) => {
-  const rect = figma.createRectangle()
-  const fills = clone(rect.fills)
+//   return fills
+// }
 
-  rect.resize(width, height)
-  fills[0].color = fill
-  rect.fills = fills
+// const createRect = (width, height, fill) => {
+//   const rect = figma.createRectangle()
+//   const fills = clone(rect.fills)
 
-  return rect
-}
+//   rect.resize(width, height)
+//   fills[0].color = fill
+//   rect.fills = fills
 
-const figmaColorInterpolator = (d3Interpolator) => {
-  const interpolator = scales[d3Interpolator]
-  return (t) => {
-    const c = interpolator(t)
-    const { r, g, b } = rgb(c)
-    return { r: r / 255, g: g / 255, b: b / 255 }
-  }
-}
+//   return rect
+// }
 
-const hexFromFigmaColor = ({ r, g, b }) => rgb(r * 255, g * 255, b * 255).hex()
+// const figmaColorInterpolator = (d3Interpolator) => {
+//   const interpolator = scales[d3Interpolator]
+//   return (t) => {
+//     const c = interpolator(t)
+//     const { r, g, b } = rgb(c)
+//     return { r: r / 255, g: g / 255, b: b / 255 }
+//   }
+// }
 
-figma.ui.onmessage = ({ type, ...props }) => {
-  const size = 50
+// const hexFromFigmaColor = ({ r, g, b }) => rgb(r * 255, g * 255, b * 255).hex()
 
-  if (type === 'generate-fill-blend') {
-    const { count } = props
-    const stepCount = count - 1
-    const nodes = []
+// figma.ui.onmessage = ({ type, ...props }) => {
+//   const size = 50
 
-    const colors = generateColorSteps()
-    const domain = colors.map((_, i) => (i === 0 ? 0 : stepCount / i)).sort()
+//   if (type === 'generate-fill-blend') {
+//     const { count } = props
+//     const stepCount = count - 1
+//     const nodes = []
 
-    const scale = scaleLinear()
-      .domain(domain)
-      .range(colors) as any
+//     const colors = generateColorSteps()
+//     const domain = colors.map((_, i) => (i === 0 ? 0 : stepCount / i)).sort()
 
-    for (let i = 0; i <= stepCount; i += 1) {
-      const color = scale(i)
-      const hex = hexFromFigmaColor(color)
+//     const scale = scaleLinear()
+//       .domain(domain)
+//       .range(colors) as any
 
-      const rect = createRect(size, size, color)
+//     for (let i = 0; i <= stepCount; i += 1) {
+//       const color = scale(i)
+//       const hex = hexFromFigmaColor(color)
 
-      rect.x = i * size + (i * size) / 3
-      rect.cornerRadius = 3
-      rect.name = hex
+//       const rect = createRect(size, size, color)
 
-      figma.currentPage.appendChild(rect)
-      nodes.push(rect)
-    }
+//       rect.x = i * size + (i * size) / 3
+//       rect.cornerRadius = 3
+//       rect.name = hex
 
-    figma.currentPage.selection = nodes
-    figma.viewport.scrollAndZoomIntoView(nodes)
+//       figma.currentPage.appendChild(rect)
+//       nodes.push(rect)
+//     }
 
-    const group = figma.group(figma.currentPage.selection, figma.currentPage)
-    group.name = 'Colors'
-  }
+//     figma.currentPage.selection = nodes
+//     figma.viewport.scrollAndZoomIntoView(nodes)
 
-  if (type === 'generate-palette-steps') {
-    const nodes = []
-    const { interpolator, steps } = props
-    const scale = scaleSequential(figmaColorInterpolator(interpolator)).domain([
-      0,
-      steps,
-    ])
+//     const group = figma.group(figma.currentPage.selection, figma.currentPage)
+//     group.name = 'Colors'
+//   }
 
-    for (let i = 0; i < steps; i++) {
-      const color = scale(i)
-      const rect = createRect(size, size, color)
-      rect.x = i * size + (i * size) / 3
-      rect.cornerRadius = 3
-      nodes.push(rect)
-    }
+//   if (type === 'generate-palette-steps') {
+//     const nodes = []
+//     const { interpolator, steps } = props
+//     const scale = scaleSequential(figmaColorInterpolator(interpolator)).domain([
+//       0,
+//       steps,
+//     ])
 
-    figma.currentPage.selection = nodes
-    figma.viewport.scrollAndZoomIntoView(nodes)
+//     for (let i = 0; i < steps; i++) {
+//       const color = scale(i)
+//       const rect = createRect(size, size, color)
+//       rect.x = i * size + (i * size) / 3
+//       rect.cornerRadius = 3
+//       nodes.push(rect)
+//     }
 
-    const group = figma.group(figma.currentPage.selection, figma.currentPage)
-    group.name = `${steps} ${interpolator} colors`
-  }
+//     figma.currentPage.selection = nodes
+//     figma.viewport.scrollAndZoomIntoView(nodes)
 
-  figma.closePlugin()
-}
+//     const group = figma.group(figma.currentPage.selection, figma.currentPage)
+//     group.name = `${steps} ${interpolator} colors`
+//   }
+
+//   figma.closePlugin()
+// }
