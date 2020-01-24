@@ -8,9 +8,34 @@ import SwatchTransitionComponent from './components/SwatchTransitionComponent'
 declare function require(path: string): any
 
 function App() {
+  const [location, setLocation] = React.useState('root')
+
   return (
-    <div>
-      <SwatchTransitionComponent />
+    <div className="ui">
+      {location !== 'root' && (
+        <div className="ui-actions">
+          <a onClick={() => setLocation('root')}>&#xab; Tools</a>
+        </div>
+      )}
+      {location === 'root' && (
+        <div id="menu">
+          <ul className="tools">
+            <li>
+              <a onClick={() => setLocation('swatchTransition')}>
+                Swatch Transition Palette
+              </a>
+            </li>
+            <li>
+              <a onClick={() => setLocation('chromaticScheme')}>
+                Chromatic Scheme Palette
+              </a>
+            </li>
+          </ul>
+        </div>
+      )}
+      <div className="content">
+        {location === 'swatchTransition' && <SwatchTransitionComponent />}
+      </div>
     </div>
   )
 }
