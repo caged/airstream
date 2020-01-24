@@ -1,8 +1,9 @@
 import * as React from 'react'
-import { scaleLinear, scaleSequential } from 'd3-scale'
-import * as scales from 'd3-scale-chromatic'
+import { scaleSequential, scaleQuantize } from 'd3-scale'
+import { quantize } from 'd3-interpolate'
 import { useForm } from 'react-hook-form'
 import { figmaChromaticInterpolator } from '../utilities'
+import * as chromaticScales from 'd3-scale-chromatic'
 
 interface Props {}
 
@@ -57,7 +58,17 @@ const ChromaticPaletteComponent: React.FC<Props> = () => {
     ).domain([0, steps])
 
     const colors = [...Array(steps).keys()].map(scale)
-    const pluginMessage = { action: 'generateSwatches', colors }
+
+    // We could use quantize, but it has two important differences.
+    // 1. For continuos scales, it generates idential swatches at the edges
+    // 2. Due to the dynamics of 1, I find it produces a harshes transition.
+    // const colors = quantize(figmaChromaticInterpolator(interpolator), steps)
+
+    const pluginMessage = {
+      action: 'generateSwatches',
+      colors,
+      meta: { name: `${interpolator} colors` },
+    }
     parent.postMessage({ pluginMessage }, '*')
   }
 

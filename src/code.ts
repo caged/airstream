@@ -49,7 +49,7 @@ figma.ui.onmessage = ({ action, ...props }) => {
   if (action === 'generateSwatches') {
     const swatches = Actions.generateSwatches({ size: 50, ...props })
     const group = figma.group(swatches, figma.currentPage)
-    group.name = `${swatches.length} Swatches`
+    group.name = `${props.meta.name} Swatches`
     figma.currentPage.selection = swatches
     figma.viewport.scrollAndZoomIntoView(swatches)
   }
