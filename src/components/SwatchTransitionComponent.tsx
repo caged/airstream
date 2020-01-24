@@ -2,27 +2,26 @@ import * as React from 'react'
 import { useForm, useFieldArray } from 'react-hook-form'
 import { generateColorTransition } from '../utilities'
 
-const SwatchTransitionComponent: React.FC = () => {
-  const defaultColor = '#CCCCCC'
-  const { handleSubmit, setValue, register, control, errors } = useForm({
-    defaultValues: {
-      fill: [{ color: defaultColor }, { color: '#4A23D8' }],
-    },
-  })
+interface ColorSwatchRowProps {
+  item: any
+  index: number
+  total: number
+  register: any
+  remove: Function
+  setValue: Function
+}
 
-  const { fields, append, remove } = useFieldArray({ control, name: 'fill' })
+const ColorSwatchRow = ({
+  item,
+  index,
+  register,
+  remove,
+  total,
+  setValue,
+}: ColorSwatchRowProps) => {
+  const name = `fill[${index}]`
 
-  const onSubmit = (data) => {
-    const { steps, fill } = data
-    const colors = generateColorTransition({
-      steps: parseInt(steps),
-      colors: fill.map((f) => f.color),
-    })
-    const pluginMessage = { action: 'generateSwatches', colors }
-    parent.postMessage({ pluginMessage }, '*')
-  }
-
-  const handleChange = (event) => {
+  const handleColorChange = (event) => {
     const { type, value, dataset } = event.target
     const index = dataset.index
     const isColorChange = type === 'color'
@@ -41,7 +40,64 @@ const SwatchTransitionComponent: React.FC = () => {
     event.target.select()
   }
 
-  const focusInput = (event) => {
+  return (
+    <div key={item.id} className="form-row-item">
+      <div className="flex-1">
+        <div className="color-input">
+          <input
+            type="color"
+            name={`${name}.color`}
+            ref={register}
+            onChange={handleColorChange}
+            defaultValue={item.color}
+            data-index={index}
+          />
+          <input
+            type="text"
+            size={7}
+            defaultValue={item.color.replace(/#/, '').toUpperCase()}
+            ref={register}
+            name={`${name}.name`}
+            onChange={handleColorChange}
+            onFocus={selectTarget}
+            data-index={index}
+            maxLength={6}
+          />
+        </div>
+      </div>
+      <div className="actions flex-shrink">
+        {total > 2 && index >= 2 && (
+          <button className="btn-icon minus" onClick={() => remove(index)}>
+            &#x02500;
+          </button>
+        )}
+      </div>
+    </div>
+  )
+}
+
+const SwatchTransitionComponent: React.FC = () => {
+  const defaultColor = '#CCCCCC'
+  const { handleSubmit, setValue, register, control, errors } = useForm({
+    defaultValues: {
+      fill: [{ color: defaultColor }, { color: '#4A23D8' }],
+    },
+  })
+
+  const { fields, append, remove } = useFieldArray({ control, name: 'fill' })
+  const colorRowProps = { register, remove, errors, setValue }
+
+  const onSubmit = (data) => {
+    const { steps, fill } = data
+    const colors = generateColorTransition({
+      steps: parseInt(steps),
+      colors: fill.map((f) => f.color),
+    })
+    const pluginMessage = { action: 'generateSwatches', colors }
+    parent.postMessage({ pluginMessage }, '*')
+  }
+
+  const focusAndSelectValue = (event) => {
     const { target } = event
     const input = target.querySelector('input')
     target.classList.add('focused')
@@ -73,63 +129,36 @@ const SwatchTransitionComponent: React.FC = () => {
       </p>
 
       <form onSubmit={handleSubmit(onSubmit)}>
+        {errors && errors.steps && errors.steps.message}
         <div className="form-row">
-          <div className="icon-input" onClick={focusInput}>
+          <div className="icon-input" onClick={focusAndSelectValue}>
             <label htmlFor="steps">Steps</label>
             <input
               className="steps ml-1 mr-2"
               name="steps"
               type="number"
-              min={2}
-              max={99}
-              ref={register({ required: true })}
+              min={fields.length}
+              max={50}
+              ref={register({
+                required: true,
+                min: fields.length,
+                max: 50,
+              })}
               defaultValue={3}
               onBlur={unfocusInput}
             />
           </div>
         </div>
         <div className="form-row">
-          {fields.map((item, index) => {
-            const name = `fill[${index}]`
-
-            return (
-              <div key={item.id} className="form-row-item">
-                <div className="flex-1">
-                  <div className="color-input">
-                    <input
-                      type="color"
-                      name={`${name}.color`}
-                      ref={register}
-                      onChange={handleChange}
-                      defaultValue={item.color}
-                      data-index={index}
-                    />
-                    <input
-                      type="text"
-                      size={7}
-                      defaultValue={item.color.replace(/#/, '').toUpperCase()}
-                      ref={register}
-                      name={`${name}.name`}
-                      onChange={handleChange}
-                      onFocus={selectTarget}
-                      data-index={index}
-                      maxLength={6}
-                    />
-                  </div>
-                </div>
-                <div className="actions flex-shrink">
-                  {fields.length > 2 && index >= 2 && (
-                    <button
-                      className="btn-icon minus"
-                      onClick={() => remove(index)}
-                    >
-                      &#x02500;
-                    </button>
-                  )}
-                </div>
-              </div>
-            )
-          })}
+          {fields.map((item, index) => (
+            <ColorSwatchRow
+              key={item.id}
+              item={item}
+              index={index}
+              total={fields.length}
+              {...colorRowProps}
+            />
+          ))}
         </div>
         <div className="form-row primary-actions">
           <input

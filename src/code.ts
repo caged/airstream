@@ -1,7 +1,3 @@
-import { scaleLinear, scaleSequential } from 'd3-scale'
-import { rgb } from 'd3-color'
-import * as scales from 'd3-scale-chromatic'
-
 figma.showUI(__html__, { height: 300 })
 
 /**

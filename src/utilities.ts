@@ -19,7 +19,7 @@ const interpolateFigmaRgb = (c1, c2) => {
 export const generateColorTransition = ({ steps, colors }) => {
   const domain = colors
     .map((_, i: number) => (i === 0 ? 0 : (steps - 1) / i))
-    .sort((a, b) => b - a)
+    .sort((a, b) => a - b)
 
   const scale = scaleLinear()
     .domain(domain)
