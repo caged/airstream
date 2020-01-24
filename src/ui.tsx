@@ -3,6 +3,7 @@ import * as ReactDOM from 'react-dom'
 import './ui.css'
 
 import SwatchTransitionComponent from './components/SwatchTransitionComponent'
+import ChromaticPaletteComponent from './components/ChromaticPaletteComponent'
 
 // eslint-disable-next-line
 declare function require(path: string): any
@@ -35,6 +36,7 @@ function App() {
       )}
       <div className="content">
         {location === 'swatchTransition' && <SwatchTransitionComponent />}
+        {location === 'chromaticScheme' && <ChromaticPaletteComponent />}
       </div>
     </div>
   )
