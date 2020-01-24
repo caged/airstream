@@ -154,7 +154,7 @@ p {
 }
 
 .form-row {
-  padding: 5px 0;
+  padding: 0 5px 0 0;
 }
 
 .form-row:first-child {
@@ -163,6 +163,18 @@ p {
 
 .form-row:last-child {
   padding-bottom: 0;
+}
+
+.form-row.primary-actions {
+  background-color: #fff;
+  border-top: 1px solid #eee;
+  padding: 10px;
+  margin: 10px 0 0 0;
+  text-align: right;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 .form-row-item {
@@ -210,7 +222,7 @@ p {
 
 .icon-input label {
   text-transform: uppercase;
-  letter-spacing: 0.06rem;
+  letter-spacing: 0.05rem;
   color: #b3b3b3;
 }
 
@@ -228,21 +240,39 @@ p {
 }
 
 .btn-primary {
-  border: 1px solid #18a0fb;
+  border: 1px solid #333;
   border-radius: 3px;
-  color: #18a0fb;
+  color: #333;
   padding: 6px 12px;
+  outline: none;
+}
+
+.btn-primary:active {
+  border-color: #18a0fb;
 }
 
 .btn-icon {
   appearance: none;
-  padding: 12px 8px;
+  padding: 8px;
   border: none;
   border-radius: 2px;
+  line-height: 0;
+  font-size: 1rem;
+  font-weight: 100;
+}
+
+.btn-icon:active {
+  outline: 1px solid #18a0fb;
 }
 
 .btn-icon.plus {
-  padding: 8px 8px;
+  padding: 8px 8px 12px 8px;
+  font-size: 1.2rem;
+}
+
+.btn-icon.minus {
+  padding: 12px 8px;
+  font-size: 0.8rem;
 }
 
 .btn-icon:hover {

@@ -1,30 +1,28 @@
 import * as React from 'react'
-import { useForm, useFieldArray, FormContext } from 'react-hook-form'
-import ColorFillArrayInput from './ColorFillArrayInput'
+import { useForm, useFieldArray } from 'react-hook-form'
+import { generateColorTransition } from '../utilities'
 
 const SwatchTransitionComponent: React.FC = () => {
-  const defaultColor = '#23ABD8'
-
-  const methods = useForm({
+  const defaultColor = '#CCCCCC'
+  const { handleSubmit, setValue, register, control, errors } = useForm({
     defaultValues: {
-      fill: [{ color: defaultColor }, { color: defaultColor }],
+      fill: [{ color: defaultColor }, { color: '#4A23D8' }],
     },
   })
 
-  const { handleSubmit, setValue, register, control, errors } = methods
-
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: 'fill',
-  })
+  const { fields, append, remove } = useFieldArray({ control, name: 'fill' })
 
   const onSubmit = (data) => {
-    parent.postMessage({ pluginMessage: { data } }, '*')
+    const { steps, fill } = data
+    const colors = generateColorTransition({
+      steps: parseInt(steps),
+      colors: fill.map((f) => f.color),
+    })
+    const pluginMessage = { action: 'generateSwatches', colors }
+    parent.postMessage({ pluginMessage }, '*')
   }
 
   const handleChange = (event) => {
-    console.log('changing')
-
     const { type, value, dataset } = event.target
     const index = dataset.index
     const isColorChange = type === 'color'
@@ -39,7 +37,7 @@ const SwatchTransitionComponent: React.FC = () => {
     }
   }
 
-  const handleFocus = (event) => {
+  const selectTarget = (event) => {
     event.target.select()
   }
 
@@ -66,30 +64,7 @@ const SwatchTransitionComponent: React.FC = () => {
           className="btn-icon plus"
           onClick={() => append({ color: defaultColor })}
         >
-          <svg height="12" width="12">
-            <line
-              x1="0"
-              y1="6"
-              x2="12"
-              y2="6"
-              style={{
-                lineWidth: 2,
-                stroke: '#333333',
-                shapeRendering: 'crisp-edges',
-              }}
-            />
-            <line
-              x1="6"
-              y1="0"
-              x2="6"
-              y2="12"
-              style={{
-                lineWidth: 2,
-                stroke: '#333333',
-                shapeRendering: 'crisp-edges',
-              }}
-            />
-          </svg>
+          &#x0002B;
         </button>
       </div>
       <p className="info">
@@ -113,9 +88,6 @@ const SwatchTransitionComponent: React.FC = () => {
             />
           </div>
         </div>
-        {/* <div className="form-row">
-            <ColorFillArrayInput name="fill" />
-          </div> */}
         <div className="form-row">
           {fields.map((item, index) => {
             const name = `fill[${index}]`
@@ -139,7 +111,7 @@ const SwatchTransitionComponent: React.FC = () => {
                       ref={register}
                       name={`${name}.name`}
                       onChange={handleChange}
-                      onFocus={handleFocus}
+                      onFocus={selectTarget}
                       data-index={index}
                       maxLength={6}
                     />
@@ -151,19 +123,7 @@ const SwatchTransitionComponent: React.FC = () => {
                       className="btn-icon minus"
                       onClick={() => remove(index)}
                     >
-                      <svg height="1" width="12">
-                        <line
-                          x1="0"
-                          y1="0"
-                          x2="12"
-                          y2="0"
-                          style={{
-                            lineWidth: 1,
-                            stroke: '#111111',
-                            shapeRendering: 'crisp-edges',
-                          }}
-                        />
-                      </svg>
+                      &#x02500;
                     </button>
                   )}
                 </div>
@@ -171,7 +131,13 @@ const SwatchTransitionComponent: React.FC = () => {
             )
           })}
         </div>
-        <input type="submit" value="Submit" className="btn-primary" />
+        <div className="form-row primary-actions">
+          <input
+            type="submit"
+            value="Generate Swatches"
+            className="btn-primary"
+          />
+        </div>
       </form>
     </div>
   )
