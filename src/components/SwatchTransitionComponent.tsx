@@ -93,7 +93,13 @@ const SwatchTransitionComponent: React.FC = () => {
       steps: parseInt(steps),
       colors: fill.map((f) => f.color),
     })
-    const pluginMessage = { action: 'generateSwatches', colors }
+    const pluginMessage = {
+      action: 'generateSwatches',
+      colors,
+      meta: {
+        name: 'Swatch Transition',
+      },
+    }
     parent.postMessage({ pluginMessage }, '*')
   }
 

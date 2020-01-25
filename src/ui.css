@@ -7,6 +7,10 @@ body {
   font-weight: 400;
 }
 
+canvas {
+  display: block;
+}
+
 input[type='number']::-webkit-outer-spin-button,
 input[type='number']::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -335,4 +339,15 @@ p {
 .info {
   color: #888;
   margin-bottom: 10px;
+}
+
+.palette {
+  border: 1px solid #eee;
+  display: inline-block;
+  margin: 3px;
+  padding: 3px;
+}
+
+.ramp-row input {
+  vertical-align: 100%;
 }
