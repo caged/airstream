@@ -1,8 +1,9 @@
 import * as React from 'react'
 import { scaleSequential } from 'd3-scale'
-import { useForm } from 'react-hook-form'
+import { useForm, FormContext } from 'react-hook-form'
 import { figmaChromaticInterpolator } from '../utilities'
 import ColorRamp from './ColorRamp'
+import FigmaInput from './FigmaInput'
 
 interface Props {}
 
@@ -55,23 +56,7 @@ const interpolators = [
 ]
 
 const ChromaticPaletteComponent: React.FC<Props> = () => {
-  const { handleSubmit, register, setValue } = useForm({})
-
-  const focusAndSelectValue = (event) => {
-    const { target } = event
-    const input = target.querySelector('input')
-    target.classList.add('focused')
-
-    if (input) {
-      input.focus()
-      input.select()
-    }
-  }
-
-  const unfocusInput = (event) => {
-    event.target.parentNode.classList.remove('focused')
-  }
-
+  const methods = useForm({})
   const onSubmit = ({ steps, interpolator }) => {
     steps = parseInt(steps)
     const scale = scaleSequential(
@@ -79,8 +64,8 @@ const ChromaticPaletteComponent: React.FC<Props> = () => {
     ).domain([0, steps])
 
     // We could use quantize, but it has two important differences.
-    // 1. For continuos scales, it generates idential swatches at the edges
-    // 2. Due to the dynamics of 1, I find it produces a harshes transition.
+    // 1. For continuous scales, it generates idential swatches at the edges
+    // 2. Due to the dynamics of 1, I find it produces a harsher transition.
     // const colors = quantize(figmaChromaticInterpolator(interpolator), steps)
     const colors = [...Array(steps).keys()].map(scale)
 
@@ -93,56 +78,45 @@ const ChromaticPaletteComponent: React.FC<Props> = () => {
   }
 
   return (
-    <div className="plugin-body">
-      <div className="flex">
-        <h2 className="section-title flex-1">Chromatic Scheme Palette</h2>
-      </div>
-      <p className="info">
-        Create a palette by sampling from the chromatic color scheme.
-      </p>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="form-row">
-          <div className="icon-input" onClick={focusAndSelectValue}>
-            <label htmlFor="steps">Steps</label>
+    <FormContext {...methods}>
+      <div className="plugin-body">
+        <div className="flex">
+          <h2 className="section-title flex-1">Chromatic Scheme Palette</h2>
+        </div>
+        <p className="info">
+          Create a palette by sampling from the chromatic color scheme.
+        </p>
+        <form onSubmit={methods.handleSubmit(onSubmit)}>
+          <div className="form-row">
+            <FigmaInput name="steps" defaultValue={9} />
+          </div>
+          <div style={{ paddingBottom: '30px' }}>
+            {interpolators.map((t, i) => (
+              <div className="ramp-row" key={t}>
+                <input
+                  type="radio"
+                  name="interpolator"
+                  value={t}
+                  ref={methods.register}
+                  defaultChecked={i === 0}
+                  onChange={(e) =>
+                    methods.setValue('interpolator', e.target.value, true)
+                  }
+                />
+                <ColorRamp interpolator={t} width={288} height={24} />
+              </div>
+            ))}
+          </div>
+          <div className="form-row primary-actions">
             <input
-              className="steps ml-1 mr-2"
-              name="steps"
-              type="number"
-              min={2}
-              max={50}
-              ref={register({
-                required: true,
-                min: 2,
-                max: 50,
-              })}
-              defaultValue={6}
-              onBlur={unfocusInput}
+              type="submit"
+              value="Generate Swatches"
+              className="btn-primary"
             />
           </div>
-        </div>
-        <div>
-          {interpolators.map((t) => (
-            <div className="ramp-row" key={t}>
-              <input
-                type="radio"
-                name="interpolator"
-                value={t}
-                ref={register}
-                onChange={(e) => setValue('interpolator', e.target.value, true)}
-              />
-              <ColorRamp interpolator={t} width={288} height={24} />
-            </div>
-          ))}
-        </div>
-        <div className="form-row primary-actions">
-          <input
-            type="submit"
-            value="Generate Swatches"
-            className="btn-primary"
-          />
-        </div>
-      </form>
-    </div>
+        </form>
+      </div>
+    </FormContext>
   )
 }
 
