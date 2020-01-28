@@ -47,7 +47,7 @@
     "eslint-plugin-react": "^7.18.0",
     "html-webpack-inline-source-plugin": "0.0.10",
     "html-webpack-plugin": "^3.2.0",
-    "react-hook-form": "^4.7.0",
+    "react-hook-form": "^4.7.1",
     "style-loader": "^1.1.2",
     "ts-loader": "^6.2.1",
     "typescript": "^3.7.5",

@@ -50,6 +50,7 @@ const ColorSwatchRow = ({
             name={`${name}.color`}
             ref={register}
             onChange={handleColorChange}
+            defaultValue={item.color}
             data-index={index}
           />
           <input
@@ -124,7 +125,12 @@ const SwatchTransitionComponent: React.FC = () => {
 
         <form onSubmit={methods.handleSubmit(onSubmit)}>
           <div className="form-row">
-            <FigmaInput name="steps" type="number" defaultValue={3} />
+            <FigmaInput
+              name="steps"
+              type="number"
+              defaultValue={3}
+              min={fields.length}
+            />
           </div>
           <div className="form-row">
             {fields.map((item, index) => (
@@ -133,6 +139,7 @@ const SwatchTransitionComponent: React.FC = () => {
                 item={item}
                 index={index}
                 total={fields.length}
+                remove={remove}
                 {...methods}
               />
             ))}
