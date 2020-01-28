@@ -47,6 +47,10 @@ p {
   padding: 0;
 }
 
+.border-bottom {
+  border-bottom: 1px solid #edf2f7;
+}
+
 .float-right {
   float: right;
 }
@@ -253,38 +257,34 @@ p {
   border-color: #e1e1e1;
 }
 
-.icon-input {
+.figma-input {
   border: 1px solid #fff;
   border-radius: 2px;
   padding: 3px;
   display: inline-block;
 }
 
-.icon-input:hover {
+.figma-inpu:hover {
   border-color: #e1e1e1;
 }
 
-.icon-input.focused {
+.focused {
   border-color: #18a0fb;
 }
 
-.icon-input label {
+.figma-input label {
   text-transform: uppercase;
   letter-spacing: 0.05rem;
   color: #b3b3b3;
 }
 
-.icon-input input {
+.figma-input input {
   border: none;
   padding: 5px 5px 5px 5px;
 }
 
-.icon-input input:focus {
+.figma-input input:focus {
   outline: none;
-}
-
-.border-bottom {
-  border-bottom: 1px solid #edf2f7;
 }
 
 .btn-primary {
