@@ -88,22 +88,28 @@ const ChromaticPaletteComponent: React.FC<Props> = () => {
         </p>
         <form onSubmit={methods.handleSubmit(onSubmit)}>
           <div className="form-row">
-            <FigmaInput name="steps" defaultValue={9} />
+            <FigmaInput name="steps" type="number" defaultValue={9} />
           </div>
           <div style={{ paddingBottom: '30px' }}>
             {interpolators.map((t, i) => (
               <div className="ramp-row" key={t}>
                 <input
-                  type="radio"
+                  type="hidden"
                   name="interpolator"
-                  value={t}
                   ref={methods.register}
-                  defaultChecked={i === 0}
-                  onChange={(e) =>
-                    methods.setValue('interpolator', e.target.value, true)
-                  }
                 />
-                <ColorRamp interpolator={t} width={288} height={24} />
+                <ColorRamp
+                  interpolator={t}
+                  width={310}
+                  height={24}
+                  onClick={(e) => {
+                    document
+                      .querySelectorAll('.palette')
+                      .forEach((e) => e.classList.remove('focused'))
+                    e.currentTarget.classList.add('focused')
+                    methods.setValue('interpolator', t, true)
+                  }}
+                />
               </div>
             ))}
           </div>
