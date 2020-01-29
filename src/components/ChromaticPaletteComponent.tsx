@@ -118,27 +118,6 @@ const ChromaticPaletteComponent: React.FC<Props> = () => {
                 ))}
               </div>
             ))}
-            {/* {interpolators.map((t, i) => (
-              <div className="ramp-row" key={t}>
-                <input
-                  type="hidden"
-                  name="interpolator"
-                  ref={methods.register}
-                />
-                <ColorRamp
-                  interpolator={t}
-                  width={310}
-                  height={24}
-                  onClick={(e) => {
-                    document
-                      .querySelectorAll('.palette')
-                      .forEach((e) => e.classList.remove('focused'))
-                    e.currentTarget.classList.add('focused')
-                    methods.setValue('interpolator', t, true)
-                  }}
-                />
-              </div>
-            ))} */}
           </div>
           <div className="form-row primary-actions">
             <input
