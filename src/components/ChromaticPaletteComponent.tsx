@@ -7,53 +7,54 @@ import FigmaInput from './FigmaInput'
 
 interface Props {}
 
-const interpolators = [
-  // Cyclical
-  'interpolateRainbow',
-  'interpolateSinebow',
+const interpolators = {
+  Cyclical: ['interpolateRainbow', 'interpolateSinebow'],
 
-  // Diverging
-  'interpolateSpectral',
-  'interpolateBrBG',
-  'interpolatePRGn',
-  'interpolatePiYG',
-  'interpolatePuOr',
-  'interpolateRdBu',
-  'interpolateRdGy',
-  'interpolateRdYlBu',
-  'interpolateRdYlGn',
+  Diverging: [
+    'interpolateSpectral',
+    'interpolateBrBG',
+    'interpolatePRGn',
+    'interpolatePiYG',
+    'interpolatePuOr',
+    'interpolateRdBu',
+    'interpolateRdGy',
+    'interpolateRdYlBu',
+    'interpolateRdYlGn',
+  ],
 
-  // Single-Hue Sequential
-  'interpolateBlues',
-  'interpolatePurples',
-  'interpolateGreens',
-  'interpolateGreys',
-  'interpolateOranges',
-  'interpolateReds',
+  'Multi-Hue Sequential': [
+    'interpolateTurbo',
+    'interpolateViridis',
+    'interpolateWarm',
+    'interpolateCividis',
+    'interpolateCool',
+    'interpolateCubehelixDefault',
+    'interpolateInferno',
+    'interpolateMagma',
+    'interpolatePlasma',
+    'interpolateBuGn',
+    'interpolateBuPu',
+    'interpolateGnBu',
+    'interpolateOrRd',
+    'interpolatePuBu',
+    'interpolatePuBuGn',
+    'interpolatePuRd',
+    'interpolateRdPu',
+    'interpolateYlGn',
+    'interpolateYlGnBu',
+    'interpolateYlOrBr',
+    'interpolateYlOrRd',
+  ],
 
-  // Multi-Hue Sequential
-  'interpolateTurbo',
-  'interpolateViridis',
-  'interpolateWarm',
-  'interpolateCividis',
-  'interpolateCool',
-  'interpolateCubehelixDefault',
-  'interpolateInferno',
-  'interpolateMagma',
-  'interpolatePlasma',
-  'interpolateBuGn',
-  'interpolateBuPu',
-  'interpolateGnBu',
-  'interpolateOrRd',
-  'interpolatePuBu',
-  'interpolatePuBuGn',
-  'interpolatePuRd',
-  'interpolateRdPu',
-  'interpolateYlGn',
-  'interpolateYlGnBu',
-  'interpolateYlOrBr',
-  'interpolateYlOrRd',
-]
+  'Single-Hue Sequentia': [
+    'interpolateBlues',
+    'interpolatePurples',
+    'interpolateGreens',
+    'interpolateGreys',
+    'interpolateOranges',
+    'interpolateReds',
+  ],
+}
 
 const ChromaticPaletteComponent: React.FC<Props> = () => {
   const methods = useForm({})
@@ -90,8 +91,34 @@ const ChromaticPaletteComponent: React.FC<Props> = () => {
           <div className="form-row">
             <FigmaInput name="steps" type="number" defaultValue={9} />
           </div>
-          <div style={{ paddingBottom: '30px' }}>
-            {interpolators.map((t, i) => (
+          <div style={{ paddingBottom: '20px' }}>
+            {Object.keys(interpolators).map((label) => (
+              <div key={label} className="ramp-group">
+                <h3>{label}</h3>
+                {interpolators[label].map((t) => (
+                  <div key={t} className="ramp-row">
+                    <input
+                      type="hidden"
+                      name="interpolator"
+                      ref={methods.register}
+                    />
+                    <ColorRamp
+                      interpolator={t}
+                      width={310}
+                      height={24}
+                      onClick={(e) => {
+                        document
+                          .querySelectorAll('.palette')
+                          .forEach((e) => e.classList.remove('focused'))
+                        e.currentTarget.classList.add('focused')
+                        methods.setValue('interpolator', t, true)
+                      }}
+                    />
+                  </div>
+                ))}
+              </div>
+            ))}
+            {/* {interpolators.map((t, i) => (
               <div className="ramp-row" key={t}>
                 <input
                   type="hidden"
@@ -111,7 +138,7 @@ const ChromaticPaletteComponent: React.FC<Props> = () => {
                   }}
                 />
               </div>
-            ))}
+            ))} */}
           </div>
           <div className="form-row primary-actions">
             <input
