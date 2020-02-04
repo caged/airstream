@@ -7,7 +7,12 @@ interface Props extends React.ComponentPropsWithoutRef<any> {
 
 const FigmaInput: React.FC<Props> = ({ name, ...props }: Props) => {
   const { register } = useFormContext()
-  const className = `figma-input ${props.className}`
+  const className = `figma-input-container ${
+    props.className ? props.className : ''
+  }`
+
+  delete props.className
+
   const focusAndSelectValue = (event) => {
     const { currentTarget } = event
     currentTarget.classList.add('focused')
@@ -31,7 +36,7 @@ const FigmaInput: React.FC<Props> = ({ name, ...props }: Props) => {
       {...props}
     >
       <label htmlFor={name}>{name}</label>
-      <input name={name} ref={register} {...props} />
+      <input name={name} ref={register} className="figma-input" {...props} />
     </div>
   )
 }

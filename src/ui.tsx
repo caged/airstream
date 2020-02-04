@@ -31,13 +31,11 @@ function App() {
         <div id="menu">
           <ul className="tools">
             <li>
-              <a onClick={() => setLocation('swatchTransition')}>
-                Swatch Transition Palette
-              </a>
+              <a onClick={() => setLocation('swatchTransition')}>Color Blend</a>
             </li>
             <li>
               <a onClick={() => setLocation('chromaticScheme')}>
-                Chromatic Scheme Palette
+                Chromatic Palette
               </a>
             </li>
           </ul>

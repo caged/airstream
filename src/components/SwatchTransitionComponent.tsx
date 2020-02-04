@@ -110,7 +110,7 @@ const SwatchTransitionComponent: React.FC = () => {
     <FormContext {...methods}>
       <div className="plugin-body">
         <div className="flex">
-          <h2 className="section-title flex-1">Swatch Blend</h2>
+          <h2 className="section-title flex-1">Color Blend</h2>
           <button
             className="btn-icon plus"
             onClick={() => append({ color: defaultColor })}

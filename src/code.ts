@@ -28,15 +28,23 @@ const createRect = (
 interface GenerateSwatchesProps {
   colors: Array<any>
   size: number
+  offsetX: number
+  offsetY: number
 }
 
 const Actions = {
   /**
    * Generate a group of swatches with the given size and colors
    */
-  generateSwatches({ colors, size }: GenerateSwatchesProps): RectangleNode[] {
+  generateSwatches({
+    colors,
+    size,
+    offsetX = 0,
+    offsetY = 0,
+  }: GenerateSwatchesProps): RectangleNode[] {
     return colors.map((color, i) => {
       const rect = createRect(size, size, color.fill)
+      rect.y = offsetY
       rect.x = i * size + (i * size) / 6
       rect.cornerRadius = 3
       rect.name = color.hex

@@ -14,6 +14,8 @@ const ColorRamp = ({ width, height, interpolator, ...props }: Props) => {
   const n = 256
   const colors = []
 
+  props.className = `palette ${props.className}`
+
   for (let i = 0; i < n; ++i) {
     colors.push(rgb(interpolate(i / (n - 1))).hex())
   }
@@ -28,7 +30,6 @@ const ColorRamp = ({ width, height, interpolator, ...props }: Props) => {
 
   return (
     <canvas
-      className="palette"
       ref={canvasRef}
       width={256}
       height={1}

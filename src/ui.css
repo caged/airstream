@@ -257,33 +257,37 @@ p {
   border-color: #e1e1e1;
 }
 
-.figma-input {
+.figma-input-container {
+  box-sizing: border-box;
   border: 1px solid #fff;
   border-radius: 2px;
   padding: 3px;
-  display: inline-block;
+  margin: 0 3px;
 }
 
-.figma-inpu:hover {
+.figma-input-container.focused {
+  border-color: #18a0fb !important;
+}
+
+.figma-input-container:hover {
   border-color: #e1e1e1;
 }
 
-.focused {
-  border-color: #18a0fb;
-}
-
-.figma-input label {
+.figma-input-container label {
   text-transform: uppercase;
   letter-spacing: 0.05rem;
   color: #b3b3b3;
+  display: inline-block;
 }
 
-.figma-input input {
+.figma-input {
   border: none;
-  padding: 5px 5px 5px 5px;
+  padding: 5px;
+  width: 60%;
+  display: inline-block;
 }
 
-.figma-input input:focus {
+.figma-input:focus {
   outline: none;
 }
 
@@ -352,19 +356,16 @@ p {
 }
 
 .palette {
-  border: 1px solid #eee;
-  border-radius: 3px;
+  border: 2px solid #fff;
   display: inline-block;
   margin: 3px 0;
-  padding: 6px;
+  padding: 3px;
 }
 
 .palette:hover {
   border-color: #ccc;
-  background-color: #f1f1f1;
 }
 
 .palette.focused {
   border-color: #18a0fb;
-  box-shadow: inset 0 0 3px #18a0fb;
 }
