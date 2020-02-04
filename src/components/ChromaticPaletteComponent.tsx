@@ -47,7 +47,7 @@ const interpolators = {
     'interpolateYlOrRd',
   ],
 
-  'Single-Hue Sequentia': [
+  'Single-Hue Sequential': [
     'interpolateBlues',
     'interpolatePurples',
     'interpolateGreens',
@@ -60,6 +60,8 @@ const interpolators = {
 const ChromaticPaletteComponent: React.FC<Props> = () => {
   const methods = useForm({})
   const onSubmit = ({ steps, rows, interpolator }) => {
+    console.log(steps, rows, interpolator)
+
     steps = parseInt(steps)
     rows = parseInt(rows)
     const scale = scaleSequential(
@@ -133,7 +135,7 @@ const ChromaticPaletteComponent: React.FC<Props> = () => {
                   <div key={t} className="ramp-row">
                     <input
                       type="hidden"
-                      name="intterpolator"
+                      name="interpolator"
                       ref={methods.register}
                       defaultValue="interpolateRainbow"
                     />

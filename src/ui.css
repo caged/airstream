@@ -358,12 +358,12 @@ p {
 .palette {
   border: 2px solid #fff;
   display: inline-block;
-  margin: 3px 0;
-  padding: 3px;
+  margin: 1px 0;
+  padding: 1px;
 }
 
 .palette:hover {
-  border-color: #ccc;
+  border-color: #0e83d1;
 }
 
 .palette.focused {
