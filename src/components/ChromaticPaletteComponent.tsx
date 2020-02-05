@@ -60,8 +60,6 @@ const interpolators = {
 const ChromaticPaletteComponent: React.FC<Props> = () => {
   const methods = useForm({})
   const onSubmit = ({ steps, rows, interpolator }) => {
-    console.log(steps, rows, interpolator)
-
     steps = parseInt(steps)
     rows = parseInt(rows)
     const scale = scaleSequential(
