@@ -49,6 +49,10 @@ export type Interpolator =
   | 'interpolateOranges'
   | 'interpolateReds'
 
+// Color ramps have a fixed pixel width and heights
+const FIXED_WIDTH = 256
+const FIXED_HEIGHT = 1
+
 interface Props extends React.ComponentPropsWithoutRef<any> {
   interpolator: Interpolator
   width: number
@@ -77,9 +81,10 @@ const ColorRamp = ({ width, height, interpolator, ...props }: Props) => {
 
   return (
     <canvas
+      data-testid="canvas"
       ref={canvasRef}
-      width={256}
-      height={1}
+      width={FIXED_WIDTH}
+      height={FIXED_HEIGHT}
       style={{ height: `${height}px`, width: `${width}px` }}
       {...props}
     />

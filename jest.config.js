@@ -9,5 +9,6 @@ module.exports = {
   "transform": {
     "^.+\\.(ts|tsx)$": "ts-jest"
   },
-  setupFiles: ["jest-canvas-mock"]
+  setupFiles: ["jest-canvas-mock"],
+  setupFilesAfterEnv: ['@testing-library/jest-dom']
 }
