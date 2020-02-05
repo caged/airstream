@@ -2,6 +2,7 @@ module.exports = {
   env: {
     browser: true,
     es6: true,
+    jest: true
   },
   extends: [
     'eslint:recommended',
@@ -19,8 +20,9 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: [
-    '@typescript-eslint',,
-    'react'
+    '@typescript-eslint',
+    'react',
+    'jest'
   ],
   rules: {
     'no-restricted-syntax': [
