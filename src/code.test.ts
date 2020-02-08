@@ -1,5 +1,5 @@
 /**
- * @jest-environment /Users/justin/dev/figma/plugins/airstream/src/figma.jest.js
+ * @jest-environment ./src/figma.jest.js
  */
 
 import { Actions } from './code'
