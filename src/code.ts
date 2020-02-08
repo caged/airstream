@@ -28,11 +28,11 @@ const createRect = (
 interface GenerateSwatchesProps {
   colors: Array<any>
   size: number
-  offsetX: number
-  offsetY: number
+  offsetX?: number
+  offsetY?: number
 }
 
-const Actions = {
+export const Actions = {
   /**
    * Generate a group of swatches with the given size and colors
    */

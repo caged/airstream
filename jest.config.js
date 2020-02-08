@@ -1,3 +1,4 @@
+
 module.exports = {
   "roots": [
     "<rootDir>/src"
@@ -10,5 +11,13 @@ module.exports = {
     "^.+\\.(ts|tsx)$": "ts-jest"
   },
   setupFiles: ["jest-canvas-mock"],
-  setupFilesAfterEnv: ['@testing-library/jest-dom']
+  setupFilesAfterEnv: ['@testing-library/jest-dom'],
+  collectCoverage: true,
+  collectCoverageFrom: [
+    "**/*.{ts,tsx}",
+  ],
+  globals: {
+    "figmaRefs": {},
+    "__html__": true
+  },
 }

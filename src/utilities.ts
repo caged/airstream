@@ -58,8 +58,6 @@ const interpolateFigmaRgb = (c1, c2) => {
     return {
       fill: { r: r / 255, g: g / 255, b: b / 255 },
       hex: rgbobj.hex(),
-      rgb: rgbobj,
-      css: rgbstr,
     }
   }
 }
@@ -98,15 +96,21 @@ export const generateColorTransition = ({
 }: {
   steps: number
   // d3 type incorrectly specifies number[]
-  colors: Array<number>
+  colors: Array<number | string>
 }) => {
+  if (colors.length < 2)
+    throw new Error('A transition requries at least two colors')
+
+  if (colors.length > steps)
+    throw new Error("The number of colors can't be larger than the steps")
+
   const domain = colors
     .map((_, i: number) => (i === 0 ? 0 : (steps - 1) / i))
     .sort((a, b) => a - b)
 
   const scale = scaleLinear()
     .domain(domain)
-    .range(colors)
+    .range(colors as Array<number>)
     .interpolate(interpolateFigmaRgb)
 
   return [...Array(steps).keys()].map(scale)
