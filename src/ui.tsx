@@ -8,7 +8,7 @@ import ChromaticPaletteComponent from './components/ChromaticPaletteComponent'
 // eslint-disable-next-line
 declare function require(path: string): any
 
-function App() {
+export function App() {
   const [location, setLocation] = React.useState('root')
 
   return (
