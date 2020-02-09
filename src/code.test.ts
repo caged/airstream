@@ -2,7 +2,7 @@
  * @jest-environment ./src/figma.jest.js
  */
 
-import { Actions } from './code'
+import { generateSwatches, handleMessage } from './code'
 import { generateColorTransition } from './utilities'
 import '../figma.d.ts'
 
@@ -10,7 +10,7 @@ import '../figma.d.ts'
 // seem to fully satisfy the type checker.
 declare global {
   interface Window {
-    figma: () => void
+    figma: any
     figmaRefs: any
   }
 }
@@ -22,9 +22,21 @@ beforeEach(() => {
 test('generates swatches', () => {
   const size = 50
   const colors = generateColorTransition({ steps: 2, colors: ['#fff', '#ccc'] })
-  Actions.generateSwatches({ colors, size })
+  generateSwatches({ colors, size })
 
-  expect(figma.showUI).toHaveBeenCalledTimes(1)
   expect(figma.createRectangle).toHaveBeenCalledTimes(2)
   expect(window.figmaRefs.resize).toHaveBeenCalledWith(size, size)
+})
+
+test('can handle message', () => {
+  const colors = generateColorTransition({ steps: 2, colors: ['#fff', '#ccc'] })
+
+  expect(
+    handleMessage({
+      action: 'generateSwatches',
+      size: 50,
+      colors,
+      meta: { name: 'foo' },
+    })
+  )
 })

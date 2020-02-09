@@ -8,15 +8,28 @@ figmaRefs.resize = mock.fn()
 const figma = mock.fn()
 figma.showUI = mock.fn()
 figma.ui = mock.fn()
-figma.group = mock.fn()
+figma.group = mock.fn(() => {
+  return {
+    name: ''
+  }
+})
+
+figma.currentPage = mock.fn(() => {
+  return {
+    selection: ''
+  }
+})
+
+figma.viewport = mock.fn()
+figma.viewport.scrollAndZoomIntoView = mock.fn()
+
 
 figma.createRectangle = mock.fn(() => {
   return {
     fills: [{ color: mock.fn() }],
-    resize: figmaRefs.resize
+    resize: figmaRefs.resize,
   }
 })
-
 
 class FigmaEnvironment extends JSDOMEnvironment {
   constructor(config, context) {

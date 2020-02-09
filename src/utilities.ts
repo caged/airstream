@@ -50,8 +50,13 @@ export type Interpolator =
   | 'interpolateOranges'
   | 'interpolateReds'
 
+export interface ColorValues {
+  fill: RGB
+  hex: string
+}
+
 const interpolateFigmaRgb = (c1, c2) => {
-  return (t) => {
+  return (t): ColorValues => {
     const rgbstr = interpolateRgb(c1, c2)(t)
     const rgbobj = rgb(rgbstr)
     const { r, g, b } = rgbobj
@@ -97,7 +102,7 @@ export const generateColorTransition = ({
   steps: number
   // d3 type incorrectly specifies number[]
   colors: Array<number | string>
-}) => {
+}): Array<ColorValues> => {
   if (colors.length < 2)
     throw new Error('A transition requries at least two colors')
 
