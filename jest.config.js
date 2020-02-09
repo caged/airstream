@@ -16,6 +16,14 @@ module.exports = {
   collectCoverageFrom: [
     "**/*.{ts,tsx}",
   ],
+  coverageThreshold: {
+    "global": {
+      "branches": 75,
+      "functions": 75,
+      "lines": 75,
+      "statements": 75
+    },
+  },
   globals: {
     "figmaRefs": {},
     "__html__": true
