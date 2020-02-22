@@ -6,7 +6,7 @@ type AvailableActions = 'generateSwatches'
 
 interface GenerateSwatchesProps {
   colors: Array<any>
-  size: number
+  size?: number
   offsetX?: number
   offsetY?: number
 }
@@ -52,7 +52,7 @@ const createRect = (
  */
 const generateSwatches = ({
   colors,
-  size,
+  size = 50,
   offsetX = 0,
   offsetY = 0,
 }: GenerateSwatchesProps): RectangleNode[] => {
