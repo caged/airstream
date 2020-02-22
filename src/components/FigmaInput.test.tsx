@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, fireEvent, wait } from '@testing-library/react'
+import { render, fireEvent } from '@testing-library/react'
 import { useForm, FormContext } from 'react-hook-form'
 import FigmaInput from './FigmaInput'
 
