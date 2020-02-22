@@ -68,7 +68,11 @@ const ColorSwatchRow = ({
       </div>
       <div className="actions flex-shrink">
         {total > 2 && index >= 2 && (
-          <button className="btn-icon minus" onClick={() => remove(index)}>
+          <button
+            type="button"
+            className="btn-icon minus"
+            onClick={() => remove(index)}
+          >
             &#x02500;
           </button>
         )}
