@@ -36,7 +36,13 @@ const FigmaInput: React.FC<Props> = ({ name, ...props }: Props) => {
       {...props}
     >
       <label htmlFor={name}>{name}</label>
-      <input name={name} ref={register} className="figma-input" {...props} />
+      <input
+        id={name}
+        name={name}
+        ref={register}
+        className="figma-input"
+        {...props}
+      />
     </div>
   )
 }
