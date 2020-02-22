@@ -42,7 +42,7 @@ const ColorSwatchRow = ({
   }
 
   return (
-    <div key={item.id} className="form-row-item">
+    <div key={item.id} id={`color-${index}`} className="form-row-item">
       <div className="flex-1">
         <div className="color-input">
           <input
@@ -150,6 +150,7 @@ const SwatchTransitionComponent: React.FC = () => {
           </div>
           <div className="form-row primary-actions">
             <input
+              title="Submit"
               type="submit"
               value="Generate Swatches"
               className="btn-primary"
