@@ -1,9 +1,17 @@
-figma.showUI(__html__, { visible: false })
+figma.showUI(__html__, { width: 200, height: 200, visible: false })
 
-figma.ui.postMessage({
-  command: figma.command,
-})
+if (figma.command)
+  figma.ui.postMessage({
+    command: figma.command,
+  })
 
 figma.ui.onmessage = (message) => {
-  figma.closePlugin()
+  const { command } = message
+
+  if (command === 'resize') {
+    figma.ui.resize(message.width, message.height)
+    figma.ui.show()
+  } else {
+    // figma.closePlugin()
+  }
 }

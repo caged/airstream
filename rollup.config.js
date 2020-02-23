@@ -16,7 +16,7 @@ import htmlBundle from 'rollup-plugin-html-bundle';
 const production = !process.env.ROLLUP_WATCH;
 
 export default [{
-	input: 'src/main.js',
+	input: 'src/index.js',
 	output: {
 		format: 'iife',
 		name: 'ui',
