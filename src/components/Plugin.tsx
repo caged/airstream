@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 import SwatchTransitionComponent from './SwatchTransitionComponent'
-import ChromaticPaletteComponent from './ChromaticPaletteComponent'
+import ChromaticPalette from './ChromaticPalette'
 
 // eslint-disable-next-line
 declare function require(path: string): any
@@ -41,7 +41,7 @@ export default function Plugin() {
       )}
       <div className="content">
         {location === 'swatchTransition' && <SwatchTransitionComponent />}
-        {location === 'chromaticScheme' && <ChromaticPaletteComponent />}
+        {location === 'chromaticScheme' && <ChromaticPalette />}
       </div>
     </div>
   )

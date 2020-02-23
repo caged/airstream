@@ -56,7 +56,7 @@ const interpolators = {
   ],
 }
 
-const ChromaticPaletteComponent: React.FC<Props> = () => {
+const ChromaticPalette: React.FC<Props> = () => {
   const methods = useForm({})
 
   const onSubmit = ({ steps, interpolator }) => {
@@ -145,4 +145,4 @@ const ChromaticPaletteComponent: React.FC<Props> = () => {
   )
 }
 
-export default ChromaticPaletteComponent
+export default ChromaticPalette

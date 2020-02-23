@@ -1,9 +1,9 @@
 import React from 'react'
 import { render, fireEvent, wait } from '@testing-library/react'
-import ChromaticPaletteComponent from './ChromaticPaletteComponent'
+import ChromaticPalette from './ChromaticPalette'
 
 test('renders the default UI', () => {
-  const { queryByLabelText, container } = render(<ChromaticPaletteComponent />)
+  const { queryByLabelText, container } = render(<ChromaticPalette />)
   const el = container.querySelector("input[name='interpolator']")
 
   expect(el).toBeInTheDocument()
@@ -12,7 +12,7 @@ test('renders the default UI', () => {
 })
 
 test('sets the active color ramp', () => {
-  const { container } = render(<ChromaticPaletteComponent />)
+  const { container } = render(<ChromaticPalette />)
   const el = container.querySelector('.ramp-row:nth-child(2) canvas')
 
   expect(el).toBeInTheDocument()
@@ -26,7 +26,7 @@ test('sets the active color ramp', () => {
 test('submits form and calls figma', async () => {
   const callback = jest.fn()
   parent.postMessage = callback
-  const { getByTitle } = render(<ChromaticPaletteComponent />)
+  const { getByTitle } = render(<ChromaticPalette />)
 
   const btn = getByTitle('Submit')
   fireEvent.click(btn)
