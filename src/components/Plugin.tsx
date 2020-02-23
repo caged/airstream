@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import SwatchTransitionComponent from './SwatchTransitionComponent'
+import SwatchTransition from './SwatchTransition'
 import ChromaticPalette from './ChromaticPalette'
 
 // eslint-disable-next-line
@@ -40,7 +40,7 @@ export default function Plugin() {
         </div>
       )}
       <div className="content">
-        {location === 'swatchTransition' && <SwatchTransitionComponent />}
+        {location === 'swatchTransition' && <SwatchTransition />}
         {location === 'chromaticScheme' && <ChromaticPalette />}
       </div>
     </div>

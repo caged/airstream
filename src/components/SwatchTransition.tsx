@@ -81,7 +81,7 @@ const ColorSwatchRow = ({
   )
 }
 
-const SwatchTransitionComponent: React.FC = () => {
+const SwatchTransition: React.FC = () => {
   const defaultColor = '#CCCCCC'
   const methods = useForm({
     defaultValues: {
@@ -162,4 +162,4 @@ const SwatchTransitionComponent: React.FC = () => {
   )
 }
 
-export default SwatchTransitionComponent
+export default SwatchTransition

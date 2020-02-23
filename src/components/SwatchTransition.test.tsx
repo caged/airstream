@@ -1,9 +1,9 @@
 import React from 'react'
 import { render, fireEvent, wait } from '@testing-library/react'
-import SwatchTransitionComponent from './SwatchTransitionComponent'
+import SwatchTransition from './SwatchTransition'
 
 it('should render with expected defaults', async () => {
-  const { container } = render(<SwatchTransitionComponent />)
+  const { container } = render(<SwatchTransition />)
   expect(container).toBeInTheDocument()
 
   expect(container.querySelector('input[name=steps]')).toHaveValue(3)
@@ -19,7 +19,7 @@ it('should render with expected defaults', async () => {
 it('should submit the form', async () => {
   const callback = jest.fn()
   parent.postMessage = callback
-  const { getByTitle } = render(<SwatchTransitionComponent />)
+  const { getByTitle } = render(<SwatchTransition />)
   const btn = getByTitle('Submit')
   fireEvent.click(btn)
 
@@ -31,7 +31,7 @@ it('should submit the form', async () => {
 it('should add some colors', async () => {
   const callback = jest.fn()
   parent.postMessage = callback
-  const { container } = render(<SwatchTransitionComponent />)
+  const { container } = render(<SwatchTransition />)
   const btn = container.querySelector('.plus')
 
   expect(container.querySelectorAll('.color-input')).toHaveLength(2)
@@ -46,7 +46,7 @@ it('should add some colors', async () => {
 it('should remove some colors when pressing minus button', async () => {
   const callback = jest.fn()
   parent.postMessage = callback
-  const { container } = render(<SwatchTransitionComponent />)
+  const { container } = render(<SwatchTransition />)
   const steps = container.querySelector('input[name=steps]')
   const btn = container.querySelector('.plus')
 
@@ -73,7 +73,7 @@ it('should remove some colors when pressing minus button', async () => {
 it('should keep color changes in sync between color and text inputs', async () => {
   const callback = jest.fn()
   parent.postMessage = callback
-  const { container } = render(<SwatchTransitionComponent />)
+  const { container } = render(<SwatchTransition />)
   const wrapper = container.querySelector('.color-input')
   const clrInput = wrapper.querySelector('[type="color"]')
   const txtInput = wrapper.querySelector('[type="text"]')
