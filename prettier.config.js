@@ -6,4 +6,5 @@ module.exports = {
   semi: false,
   singleQuote: true,
   arrowParens: 'always',
+  svelteSortOrder: 'styles-scripts-markup',
 }
