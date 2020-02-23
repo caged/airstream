@@ -1,9 +1,9 @@
-import PluginApp from './PluginUI.svelte';
+import AirStream from './AirStream';
 
 let plugin
 
 window.onmessage = (event) => {
-	plugin = new PluginApp({
+	plugin = new AirStream({
 		target: document.body,
 		props: { ...event.data.pluginMessage }
 	});

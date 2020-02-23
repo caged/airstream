@@ -1,4 +1,4 @@
-figma.showUI(__html__, { width: 200, height: 200, visible: false })
+figma.showUI(__html__, { visible: false })
 
 if (figma.command)
   figma.ui.postMessage({
