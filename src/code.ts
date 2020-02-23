@@ -53,7 +53,6 @@ const createRect = (
 const generateSwatches = ({
   colors,
   size = 50,
-  offsetX = 0,
   offsetY = 0,
 }: GenerateSwatchesProps): RectangleNode[] => {
   return colors.map((color, i) => {

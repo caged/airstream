@@ -2,8 +2,6 @@ import React from 'react'
 import { render, fireEvent, wait } from '@testing-library/react'
 import ChromaticPaletteComponent from './ChromaticPaletteComponent'
 
-beforeEach(() => {})
-
 test('renders the default UI', () => {
   const { queryByLabelText, container } = render(<ChromaticPaletteComponent />)
   const el = container.querySelector("input[name='interpolator']")
