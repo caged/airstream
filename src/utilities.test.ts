@@ -65,10 +65,14 @@ test('generates a color transition from a given set of colors', () => {
   ])
 })
 
-test('requires at least two colors to generate a transition', () => {
+test('requires at least two steps and two colors to generate a transition', () => {
   const colors = ['#fff', '#ccc']
   expect(() => generateColorTransition({ steps: 1, colors })).toThrow()
   expect(generateColorTransition({ steps: 2, colors })).toHaveLength(2)
+
+  expect(() =>
+    generateColorTransition({ steps: 2, colors: [colors[0]] })
+  ).toThrow()
 })
 
 test('requires steps greater or equal to number of colors', () => {
