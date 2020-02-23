@@ -1,7 +1,13 @@
-import App from './PluginUI.svelte';
+import PluginApp from './PluginUI.svelte';
 
-const app = new App({
-	target: document.body,
-});
+let plugin
 
-export default app;
+window.onmessage = (event) => {
+	plugin = new PluginApp({
+		target: document.body,
+		props: { ...event.data.pluginMessage }
+	});
+}
+
+
+export default plugin;
