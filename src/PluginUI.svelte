@@ -3,6 +3,8 @@
 </style>
 
 <script>
+  console.log($$props)
+
   //import Global CSS from the svelte boilerplate
   //contains Figma color vars, spacing vars, utility classes and more
   import { GlobalCSS } from 'figma-plugin-ds-svelte'
