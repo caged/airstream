@@ -7,9 +7,9 @@
     "start": "sirv public"
   },
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^11.0.0",
-    "@rollup/plugin-image": "^2.0.0",
-    "@rollup/plugin-node-resolve": "^6.0.0",
+    "@rollup/plugin-commonjs": "^11.0.2",
+    "@rollup/plugin-image": "^2.0.4",
+    "@rollup/plugin-node-resolve": "^7.1.1",
     "cssnano": "^4.1.10",
     "figma-plugin-ds-svelte": "0.0.9",
     "prettier-plugin-svelte": "^0.7.0",
