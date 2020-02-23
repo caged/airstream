@@ -1,8 +1,5 @@
-<style>
-  /* Add additional global or scoped styles here */
-</style>
-
 <script>
+  export let command
   import { onMount } from 'svelte'
 
   //import Global CSS from the svelte boilerplate
@@ -14,7 +11,7 @@
       {
         pluginMessage: {
           command: 'resize',
-          width: 200,
+          width: 300,
           height: 300,
         },
       },
@@ -23,4 +20,13 @@
   })
 </script>
 
-<div class="wrapper p-xxsmall">hello world</div>
+<div class="wrapper p-xxsmall">
+  {#if command === 'ui:swatch-blend'}
+    swatch blend
+  {:else if command === 'ui:chromatic-stack'}chromatic stack{/if}
+
+</div>
+
+<style>
+  /* Add additional global or scoped styles here */
+</style>

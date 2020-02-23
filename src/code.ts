@@ -9,7 +9,8 @@ figma.ui.onmessage = (message) => {
   const { command } = message
 
   if (command === 'resize') {
-    figma.ui.resize(message.width, message.height)
+    const { width, height } = message
+    figma.ui.resize(width, height)
     figma.ui.show()
   } else {
     // figma.closePlugin()
