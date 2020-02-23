@@ -1,5 +1,9 @@
 {
   "name": "Airstream",
+  "menu": [
+    { "name": "Swatch blend", "command": "ui:swatch-blend" },
+    { "name": "Chromatic stack", "command": "ui:chromatic-stack" }
+  ],
   "id": "773254113156648564",
   "api": "1.0.0",
   "main": "public/build.js",
