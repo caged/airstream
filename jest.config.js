@@ -14,7 +14,7 @@ module.exports = {
   setupFilesAfterEnv: ['@testing-library/jest-dom'],
   collectCoverage: true,
   collectCoverageFrom: [
-    "**/*.{ts,tsx}",
+    "**/*.{ts,tsx,svelte}",
   ],
   coverageThreshold: {
     "global": {

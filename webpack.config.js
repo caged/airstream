@@ -1,6 +1,8 @@
 const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
+const sveltePreprocess = require('svelte-preprocess')
+
 
 module.exports = (env, argv) => ({
   mode: argv.mode === 'production' ? 'production' : 'development',
@@ -9,12 +11,23 @@ module.exports = (env, argv) => ({
   devtool: argv.mode === 'production' ? false : 'inline-source-map',
 
   entry: {
-    ui: './src/ui.tsx', // The entry point for your UI code
+    ui: './src/test.js', // The entry point for your UI code
     code: './src/code.ts', // The entry point for your plugin code
   },
 
   module: {
     rules: [
+      {
+        test: /\.svelte$/,
+        exclude: /node_modules/,
+        use: [{
+          loader: 'svelte-loader',
+          options: {
+            preprocess: sveltePreprocess({}),
+            hotReload: true
+          }
+        }]
+      },
       // Converts TypeScript code to JavaScript
       { test: /\.tsx?$/, use: 'ts-loader', exclude: /node_modules/ },
 
@@ -27,7 +40,13 @@ module.exports = (env, argv) => ({
   },
 
   // Webpack tries these extensions for you if you omit the extension like "import './file'"
-  resolve: { extensions: ['.tsx', '.ts', '.jsx', '.js'] },
+  resolve: {
+    alias: {
+      svelte: path.resolve('node_modules', 'svelte')
+    },
+    extensions: ['.tsx', '.ts', '.jsx', '.js', '.svelte'],
+    mainFields: ['svelte', 'browser', 'module', 'main']
+  },
 
   output: {
     filename: '[name].js',
