@@ -13,6 +13,18 @@ test('renders the default UI', () => {
   expect(queryByLabelText('steps')).toHaveValue(9)
 })
 
+test('sets the active color ramp', () => {
+  const { container } = render(<ChromaticPaletteComponent />)
+  const el = container.querySelector('.ramp-row:nth-child(2) canvas')
+
+  expect(el).toBeInTheDocument()
+  expect(el).not.toHaveClass('focused')
+
+  fireEvent.click(el)
+
+  expect(el).toHaveClass('focused')
+})
+
 test('submits form and calls figma', async () => {
   const callback = jest.fn()
   parent.postMessage = callback

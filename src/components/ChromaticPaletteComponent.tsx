@@ -79,6 +79,16 @@ const ChromaticPaletteComponent: React.FC<Props> = () => {
     parent.postMessage({ pluginMessage }, '*')
   }
 
+  // Set the active interpolator and manage the
+  // focus visual style
+  const setActiveColorRamp = (el, interpolator) => {
+    document
+      .querySelectorAll('.palette')
+      .forEach((e) => e.classList.remove('focused'))
+    el.classList.add('focused')
+    methods.setValue('interpolator', interpolator, true)
+  }
+
   return (
     <FormContext {...methods}>
       <div className="plugin-body">
@@ -114,13 +124,7 @@ const ChromaticPaletteComponent: React.FC<Props> = () => {
                       interpolator={t}
                       width={310}
                       height={12}
-                      onClick={(e) => {
-                        document
-                          .querySelectorAll('.palette')
-                          .forEach((e) => e.classList.remove('focused'))
-                        e.currentTarget.classList.add('focused')
-                        methods.setValue('interpolator', t, true)
-                      }}
+                      onClick={(e) => setActiveColorRamp(e.currentTarget, t)}
                     />
                   </div>
                 ))}
