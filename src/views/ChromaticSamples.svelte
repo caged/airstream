@@ -7,4 +7,10 @@
   })
 </script>
 
-<div>Chromatic Samples</div>
+<div class="foo">Chromatic Samples</div>
+
+<style>
+  .foo {
+    color: red;
+  }
+</style>

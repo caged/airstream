@@ -1,5 +1,6 @@
 <script>
-  import { GlobalCSS } from 'figma-plugin-ds-svelte'
+  // import { GlobalCSS } from 'figma-plugin-ds-svelte'
+  // import './test.css'
   import * as views from './views'
 
   // External props

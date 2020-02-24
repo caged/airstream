@@ -24,6 +24,7 @@ export default [{
 	},
 	plugins: [
 		svelte({
+			// preprocess: autoPreprocess({ /* options */ }),
 			// enable run-time checks when not in production
 			dev: !production
 		}),
