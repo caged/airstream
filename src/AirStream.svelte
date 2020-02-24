@@ -2,7 +2,10 @@
   import { GlobalCSS } from 'figma-plugin-ds-svelte'
   import * as views from './views'
 
-  // External props
+  /**
+   * Name of view component to render
+   * @type {string}
+   */
   export let view
 
   // Internal
@@ -12,31 +15,33 @@
     throw `Unknown plugin view ${view}`
   }
 
-  // Send a command to the Fima plugin code
-  //
-  // command - name of command
-  // props - object of properties to pass along
-  //
-  // Returns void
+  /**
+   * @description Send a command to a figma plugin
+   *
+   * @param {string} command a command name
+   * @param {object} props props to pass to figma
+   *
+   * @returns void
+   */
   function figmaCommand(command, props) {
     const pluginMessage = { command, ...props }
     parent.postMessage({ pluginMessage }, '*')
   }
 
-  // Handle resize events sent by views down the chain
-  //
-  // event - CustomEvent
-  //
-  // In your view:
-  //
-  // import { createEventDispatcher, onMount } from 'svelte'
-  // const dispatch = createEventDispatcher()
-  //
-  //  onMount(() => {
-  //    dispatch('resize', { width: 300, height: 100 })
-  //  })
-  //
-  // Returns nothing
+  /**
+   * @description Handle resize events sent by views down the chain
+   * @param {CustomEvent} event The event passed from a child plugin
+   *
+   * @example
+   *  // In your component
+   *  //
+   *  import { createEventDispatcher, onMount } from 'svelte'
+   *  const dispatch = createEventDispatcher()
+   *  onMount(() => {
+   *    dispatch('resize', { width: 300, height: 100 })
+   *  })
+   * @returns void
+   */
   function handleResize(event) {
     figmaCommand('resize', event.detail)
   }

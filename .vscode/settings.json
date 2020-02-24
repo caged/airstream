@@ -2,5 +2,10 @@
   "editor.tabSize": 2,
   "files.trimTrailingWhitespace": true,
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true,
-  },
+    "source.fixAll.eslint": true
+  }
+  // "files.associations": {
+  //   "*.svelte": "svelte"
+  // }
+  // "javascript.implicitProjectConfig.checkJs": true
+}

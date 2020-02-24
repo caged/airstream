@@ -1,6 +1,5 @@
 <script>
   import { createEventDispatcher, onMount } from 'svelte'
-  import { Button, IconButton, IconVisible } from 'figma-plugin-ds-svelte'
 
   const dispatch = createEventDispatcher()
 
@@ -9,8 +8,4 @@
   })
 </script>
 
-<div>
-  Color Blend
-  <Button>Hello</Button>
-  <IconButton on:click={() => console.log('clicked')} iconName={IconVisible} />
-</div>
+<div>Color Blend</div>
