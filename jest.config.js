@@ -1,5 +1,8 @@
 
 module.exports = {
+  // Coverage is broken for svelte files.
+  // See https://github.com/facebook/jest/issues/9490
+  //
   // collectCoverage: true,
   // coveragePathIgnorePatterns: [
   //   "./*.config.js"
