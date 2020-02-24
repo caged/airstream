@@ -6,7 +6,7 @@
    * Name of view component to render
    * @type {string}
    */
-  export let view
+  export let view = 'ChromaticSamples'
 
   // Internal
   const Component = views[view]
