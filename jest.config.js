@@ -18,8 +18,9 @@ module.exports = {
     "^.+\\.js$": "babel-jest",
     "^.+\\.svelte$": "svelte-jester"
   },
+  setupFiles: ["jest-canvas-mock"],
   setupFilesAfterEnv: [
-    "@testing-library/jest-dom/extend-expect"
+    "@testing-library/jest-dom"
   ],
   testPathIgnorePatterns: [
     "/node_modules/",

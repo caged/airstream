@@ -10,7 +10,7 @@
   })
 </script>
 
-<div>
+<div data-view="ChromaticSamples">
   {#each categories as category}
     <h3 class="mt-xsmall mb-xxsmall">{category}</h3>
     {#each Interpolators[category] as interpolator}

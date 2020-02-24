@@ -21,6 +21,7 @@
     "figma-plugin-ds-svelte": "https://github.com/caged/figma-plugin-ds-svelte.git#compile-dist",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^25.1.0",
+    "jest-canvas-mock": "^2.2.0",
     "prettier": "^1.19.1",
     "prettier-plugin-svelte": "^0.7.0",
     "rollup": "^1.31.1",

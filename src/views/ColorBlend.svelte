@@ -8,4 +8,4 @@
   })
 </script>
 
-<div>Color Blend</div>
+<div data-view="ColorBlend">Color Blend</div>
