@@ -18,7 +18,7 @@
     "@testing-library/svelte": "^1.11.0",
     "babel-jest": "^25.1.0",
     "cssnano": "^4.1.10",
-    "figma-plugin-ds-svelte": "0.1.0",
+    "figma-plugin-ds-svelte": "https://github.com/caged/figma-plugin-ds-svelte.git#compile-dist",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^25.1.0",
     "jest-transform-css": "^2.0.0",
