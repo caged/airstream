@@ -1,30 +1,49 @@
 <script>
-  export let command
-  import { onMount } from 'svelte'
-
-  //import Global CSS from the svelte boilerplate
-  //contains Figma color vars, spacing vars, utility classes and more
   import { GlobalCSS } from 'figma-plugin-ds-svelte'
+  import * as views from './views'
 
-  onMount(() => {
-    parent.postMessage(
-      {
-        pluginMessage: {
-          command: 'resize',
-          width: 300,
-          height: 300,
-        },
-      },
-      '*'
-    )
-  })
+  // External props
+  export let view
+
+  // Internal
+  const Component = views[view]
+
+  if (Component === undefined) {
+    throw `Unknown plugin view ${view}`
+  }
+
+  // Send a command to the Fima plugin code
+  //
+  // command - name of command
+  // props - object of properties to pass along
+  //
+  // Returns void
+  function figmaCommand(command, props) {
+    const pluginMessage = { command, ...props }
+    parent.postMessage({ pluginMessage }, '*')
+  }
+
+  // Handle resize events sent by views down the chain
+  //
+  // event - CustomEvent
+  //
+  // In your view:
+  //
+  // import { createEventDispatcher, onMount } from 'svelte'
+  // const dispatch = createEventDispatcher()
+  //
+  //  onMount(() => {
+  //    dispatch('resize', { width: 300, height: 100 })
+  //  })
+  //
+  // Returns nothing
+  function handleResize(event) {
+    figmaCommand('resize', event.detail)
+  }
 </script>
 
 <div class="wrapper p-xxsmall">
-  {#if command === 'ui:swatch-blend'}
-    swatch blend
-  {:else if command === 'ui:chromatic-stack'}chromatic stack{/if}
-
+  <Component on:resize={handleResize} />
 </div>
 
 <style>

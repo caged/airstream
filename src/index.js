@@ -9,5 +9,4 @@ window.onmessage = (event) => {
 	});
 }
 
-
 export default plugin;
