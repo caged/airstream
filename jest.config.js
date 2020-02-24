@@ -8,9 +8,12 @@ module.exports = {
   //   "*.svelte"
   // ],
   moduleFileExtensions: ['js', 'svelte'],
+  "moduleNameMapper": {
+    "^.+\\.css$": "identity-obj-proxy"
+  },
   "transform": {
     "^.+\\.js$": "babel-jest",
-    "^.+\\.svelte$": ["svelte-jester", { "preprocess": true }],
+    "^.+\\.svelte$": "svelte-jester"
   },
   setupFilesAfterEnv: [
     "@testing-library/jest-dom/extend-expect"
