@@ -50,16 +50,16 @@ export default [{
 			inline: true
 		}),
 
-		// In dev mode, call `npm run start` once
+		// In dev mode, call `yarn start` once
 		// the bundle has been generated
 		!production && serve(),
 
-		// Watch the `dist` directory and refresh the
+		// Watch the `public` directory and refresh the
 		// browser on changes when not in production
 		!production && livereload('public'),
 
-		// If we're building for production (npm run build
-		// instead of npm run dev), minify
+		// If we're building for production (yarn build
+		// instead of yarn dev), minify
 		production && terser()
 	],
 	watch: {
@@ -87,8 +87,7 @@ function serve() {
 		writeBundle() {
 			if (!started) {
 				started = true;
-
-				require('child_process').spawn('npm', ['run', 'start', '--', '--dev'], {
+				require('child_process').spawn('yarn', ['start', '--', '--dev'], {
 					stdio: ['ignore', 'inherit', 'inherit'],
 					shell: true
 				});
