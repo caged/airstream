@@ -1,9 +1,18 @@
 figma.showUI(__html__, { visible: false })
 
-if (figma.command)
-  figma.ui.postMessage({
-    command: figma.command,
-  })
+if (figma.command) {
+  const [part, action] = figma.command.split(':')
+
+  if (part === 'view') {
+    figma.ui.postMessage({ view: action })
+  } else {
+    exec(action)
+  }
+}
+
+function exec(action) {
+  console.log('executing', action)
+}
 
 figma.ui.onmessage = (message) => {
   const { command } = message

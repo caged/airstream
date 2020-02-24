@@ -1,8 +1,8 @@
 {
   "name": "Airstream",
   "menu": [
-    { "name": "Swatch blend", "command": "ui:swatch-blend" },
-    { "name": "Chromatic stack", "command": "ui:chromatic-stack" }
+    { "name": "Color blend", "command": "view:ColorBlend" },
+    { "name": "Chromatic samples", "command": "view:ChromaticSamples" }
   ],
   "id": "773254113156648564",
   "api": "1.0.0",
