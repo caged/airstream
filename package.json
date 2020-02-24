@@ -21,8 +21,7 @@
     "figma-plugin-ds-svelte": "https://github.com/caged/figma-plugin-ds-svelte.git#compile-dist",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^25.1.0",
-    "jest-transform-css": "^2.0.0",
-    "postcss-import": "^12.0.1",
+    "prettier": "^1.19.1",
     "prettier-plugin-svelte": "^0.7.0",
     "rollup": "^1.31.1",
     "rollup-plugin-html-bundle": "0.0.3",
@@ -34,7 +33,6 @@
     "rollup-plugin-typescript": "^1.0.1",
     "svelte": "^3.19.0",
     "svelte-jester": "^1.0.4",
-    "svelte-preprocess": "^3.4.0",
     "tslib": "^1.11.0",
     "typescript": "^3.8.2"
   },
