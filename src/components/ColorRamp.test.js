@@ -17,7 +17,7 @@ test('sets size and retains fixed pixel size', () => {
 })
 
 test('draws canvas with colors from the given interpolator', () => {
-  const count = 256
+  const steps = 256
   const interpolator = 'interpolateRainbow'
   const { container } = render(ColorRamp, { interpolator })
 
@@ -27,8 +27,8 @@ test('draws canvas with colors from the given interpolator', () => {
     .__getEvents()
     .filter((d) => d.type === 'fillStyle')
     .map((e) => e.props.value)
-  const scaleColors = colorsFromInterpolator(interpolator, count)
+  const scaleColors = colorsFromInterpolator({ steps, interpolator }).map(c => c.hex)
 
-  expect(ctx.fillRect).toBeCalledTimes(count)
+  expect(ctx.fillRect).toBeCalledTimes(steps)
   expect(filledColors).toStrictEqual(scaleColors)
 })

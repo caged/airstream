@@ -7,13 +7,13 @@
   export let height = 6
 
   let canvas
-  let count = 256
+  let steps = 256
 
   onMount(() => {
     const ctx = canvas.getContext('2d')
-    const colors = colorsFromInterpolator(interpolator, count)
-    for (let i = 0; i < count; ++i) {
-      ctx.fillStyle = colors[i]
+    const colors = colorsFromInterpolator({ steps, interpolator })
+    for (let i = 0; i < steps; ++i) {
+      ctx.fillStyle = colors[i].hex
       ctx.fillRect(i, 0, 1, 1)
     }
   })
