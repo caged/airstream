@@ -49,15 +49,17 @@
 
   .name {
     font-size: var(--font-size-xsmall);
+    margin-top: 6px;
   }
 
   .row {
+    line-height: 0;
     display: grid;
     grid-template-columns: minmax(0, 1fr) 256px;
     gap: 0.25rem;
     border: 1px solid transparent;
     border-radius: var(--border-radius-small);
-    padding: 3px;
+    padding: 4px;
   }
 
   .row:hover:not(.active) {
