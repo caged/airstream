@@ -68,5 +68,11 @@ export const colorsFromInterpolator = (interpolator, count) => {
     colors.push(rgb(interpolate(i / (count - 1))).hex())
   }
 
-  return colors
+export function runFigmaAction({ action, ...props }) {
+  parent.postMessage({
+    pluginMessage: {
+      action,
+      ...props
+    }
+  }, '*')
 }

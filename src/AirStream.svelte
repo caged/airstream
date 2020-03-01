@@ -1,6 +1,7 @@
 <script>
   import { GlobalCSS } from 'figma-plugin-ds-svelte'
   import * as views from './views'
+  import { runFigmaAction } from './utilities'
 
   /**
    * Name of view component to render
@@ -13,19 +14,6 @@
 
   if (Component === undefined) {
     throw `Unknown plugin view ${view}`
-  }
-
-  /**
-   * @description Send a command to a figma plugin
-   *
-   * @param {string} command a command name
-   * @param {object} props props to pass to figma
-   *
-   * @returns void
-   */
-  function figmaCommand(command, props) {
-    const pluginMessage = { command, ...props }
-    parent.postMessage({ pluginMessage }, '*')
   }
 
   /**
@@ -43,7 +31,7 @@
    * @returns void
    */
   function handleResize(event) {
-    figmaCommand('resize', event.detail)
+    runFigmaAction({ action: 'resize', ...event.detail })
   }
 </script>
 
