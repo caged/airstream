@@ -55,25 +55,7 @@ const createRect = (
   return rect
 }
 
-/**
- * Generate a group of swatches with the given size and colors
- */
-const generateSwatches = ({
-  colors,
-  size = 50,
-  offsetY = 0,
-}: GenerateSwatchesProps): RectangleNode[] => {
-  return colors.map((color, i) => {
-    const rect = createRect(size, size, color.fill)
-    rect.y = offsetY
-    rect.x = i * size + (i * size) / 6
-    rect.cornerRadius = 3
-    rect.name = color.hex
-    return rect
-  })
-}
-
-// Run ui-less commands directly from plugin.
+// Run ui-less commands directly from Figma plugin UI.
 function exec({ command }) {
   console.log('executing', command)
 }
@@ -81,6 +63,7 @@ function exec({ command }) {
 class AirStreamPlugin {
   static defaults = {
     constrainable: {
+      cornerRadius: 3,
       width: 50,
       height: 50,
       offset: {
@@ -101,12 +84,13 @@ class AirStreamPlugin {
     height = this.defaults.constrainable.height,
     offsetX = this.defaults.constrainable.offset.x,
     offsetY = this.defaults.constrainable.offset.y,
+    cornerRadius = this.defaults.constrainable.cornerRadius,
   }) {
-    colors.map((color, i) => {
-      const rect = createRect(width, height, color.fill)
+    return colors.map((color, i) => {
+      const rect = createRect(width, height, color.figma)
       rect.y = offsetY
-      rect.x = i * width + (i * width) / 6
-      rect.cornerRadius = 3
+      rect.x = i * width + i * offsetX
+      rect.cornerRadius = cornerRadius
       rect.name = color.hex
       return rect
     })
@@ -114,7 +98,12 @@ class AirStreamPlugin {
 
   run(action, props) {
     if (AirStreamPlugin[action]) {
-      AirStreamPlugin[action](props)
+      const resource = AirStreamPlugin[action](props)
+      if (resource && resource.length) {
+        const group = figma.group(resource, figma.currentPage)
+        figma.currentPage.selection = resource
+        figma.viewport.scrollAndZoomIntoView(resource)
+      }
     } else {
       throw new Error(
         `AirStreamPlugin doesnt know how to run action: ${action}`

@@ -22,7 +22,10 @@
   })
 
   function runPrimaryAction() {
-    const colors = colorsFromInterpolator(activeInterpolator, steps)
+    const colors = colorsFromInterpolator({
+      interpolator: activeInterpolator,
+      steps,
+    })
     runFigmaAction({
       action: 'generateSwatches',
       colors,
