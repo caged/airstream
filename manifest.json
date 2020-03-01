@@ -1,7 +1,11 @@
 {
   "name": "Airstream",
+  "menu": [
+    { "name": "Color blend", "command": "view:ColorBlend" },
+    { "name": "Chromatic samples", "command": "view:ChromaticSamples" }
+  ],
   "id": "773254113156648564",
   "api": "1.0.0",
-  "main": "dist/code.js",
-  "ui": "dist/ui.html"
+  "main": "public/build.js",
+  "ui": "public/index.html"
 }

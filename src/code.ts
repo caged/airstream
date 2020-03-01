@@ -1,7 +1,3 @@
-import { ColorValues } from './utilities'
-
-figma.showUI(__html__, { height: 400, width: 350 })
-
 type AvailableActions = 'generateSwatches'
 
 interface GenerateSwatchesProps {
@@ -18,8 +14,20 @@ interface MetaProps {
 interface MessageProps {
   action: AvailableActions
   meta: MetaProps
-  colors: Array<ColorValues>
+  colors: Array<{}>
   size: number
+}
+
+figma.showUI(__html__, { visible: false })
+
+if (figma.command) {
+  const [part, view] = figma.command.split(':')
+
+  if (part === 'view') {
+    figma.ui.postMessage({ view })
+  } else {
+    exec({ command: view })
+  }
 }
 
 /**
@@ -47,34 +55,66 @@ const createRect = (
   return rect
 }
 
-/**
- * Generate a group of swatches with the given size and colors
- */
-const generateSwatches = ({
-  colors,
-  size = 50,
-  offsetY = 0,
-}: GenerateSwatchesProps): RectangleNode[] => {
-  return colors.map((color, i) => {
-    const rect = createRect(size, size, color.fill)
-    rect.y = offsetY
-    rect.x = i * size + (i * size) / 6
-    rect.cornerRadius = 3
-    rect.name = color.hex
-    return rect
-  })
+// Run ui-less commands directly from Figma plugin UI.
+function exec({ command }) {
+  console.log('executing', command)
 }
 
-const handleMessage = ({ action, ...props }: MessageProps) => {
-  if (action === 'generateSwatches') {
-    const swatches = generateSwatches(props)
-    const group = figma.group(swatches, figma.currentPage)
-    group.name = `${props.meta && props.meta.name} Swatches`
-    figma.currentPage.selection = swatches
-    figma.viewport.scrollAndZoomIntoView(swatches)
+class AirStreamPlugin {
+  static defaults = {
+    constrainable: {
+      cornerRadius: 3,
+      width: 50,
+      height: 50,
+      offset: {
+        x: 10,
+        y: 10,
+      },
+    },
+  }
+
+  static resize({ width, height }) {
+    figma.ui.resize(width, height)
+    figma.ui.show()
+  }
+
+  static generateSwatches({
+    colors,
+    width = this.defaults.constrainable.width,
+    height = this.defaults.constrainable.height,
+    offsetX = this.defaults.constrainable.offset.x,
+    offsetY = this.defaults.constrainable.offset.y,
+    cornerRadius = this.defaults.constrainable.cornerRadius,
+  }) {
+    return colors.map((color, i) => {
+      const rect = createRect(width, height, color.figma)
+      rect.y = offsetY
+      rect.x = i * width + i * offsetX
+      rect.cornerRadius = cornerRadius
+      rect.name = color.hex
+      return rect
+    })
+  }
+
+  run(action, props) {
+    if (AirStreamPlugin[action]) {
+      const resource = AirStreamPlugin[action](props)
+      if (resource && resource.length) {
+        const group = figma.group(resource, figma.currentPage)
+        figma.currentPage.selection = resource
+        figma.viewport.scrollAndZoomIntoView(resource)
+      }
+    } else {
+      throw new Error(
+        `AirStreamPlugin doesnt know how to run action: ${action}`
+      )
+    }
   }
 }
 
-figma.ui.onmessage = handleMessage
+const airstream = new AirStreamPlugin()
 
-export { generateSwatches, handleMessage }
+figma.ui.onmessage = (message) => {
+  const { action, ...props } = message
+  airstream.run(action, props)
+}

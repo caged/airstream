@@ -1,8 +1,5 @@
 {
   "compilerOptions": {
-    "target": "es6",
-    "jsx": "react",
-    "typeRoots": ["./node_modules/@types", "./types"],
-    "esModuleInterop": true
+    "target": "es6"
   }
 }

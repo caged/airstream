@@ -1,31 +1,33 @@
 
 module.exports = {
-  "roots": [
-    "<rootDir>/src"
-  ],
-  "testMatch": [
-    "**/__tests__/**/*.+(ts|tsx|js)",
-    "**/?(*.)+(spec|test).+(ts|tsx|js)"
-  ],
+  // Coverage is broken for svelte files.
+  // See https://github.com/facebook/jest/issues/9490
+  //
+  // collectCoverage: true,
+  // coveragePathIgnorePatterns: [
+  //   "./*.config.js"
+  // ],
+  // collectCoverageFrom: [
+  //   "*.svelte"
+  // ],
+  moduleFileExtensions: ['js', 'svelte'],
+  "moduleNameMapper": {
+    "^.+\\.css$": "identity-obj-proxy"
+  },
   "transform": {
-    "^.+\\.(ts|tsx)$": "ts-jest"
+    "^.+\\.js$": "babel-jest",
+    "^.+\\.svelte$": "svelte-jester"
   },
   setupFiles: ["jest-canvas-mock"],
-  setupFilesAfterEnv: ['@testing-library/jest-dom'],
-  collectCoverage: true,
-  collectCoverageFrom: [
-    "**/*.{ts,tsx}",
+  setupFilesAfterEnv: [
+    "@testing-library/jest-dom"
   ],
-  coverageThreshold: {
-    "global": {
-      "branches": 75,
-      "functions": 75,
-      "lines": 75,
-      "statements": 75
-    },
-  },
-  globals: {
-    "figmaRefs": {},
-    "__html__": true
-  },
+  testPathIgnorePatterns: [
+    "/node_modules/",
+    "/build/",
+    "/old/",
+    "/public/"
+  ],
+  verbose: true,
+  bail: false
 }
