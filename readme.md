@@ -9,3 +9,9 @@ git clone https://github.com/caged/airstream.git
 yarn
 yarn dev
 ```
+
+### Testing
+
+```
+yarn test
+```
