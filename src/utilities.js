@@ -1,4 +1,4 @@
-import { scaleLinear } from 'd3-scale'
+import { scaleLinear, scaleSequential } from 'd3-scale'
 import { interpolateRgb } from 'd3-interpolate'
 import { rgb } from 'd3-color'
 import * as chromaticScales from 'd3-scale-chromatic'
@@ -59,14 +59,33 @@ export const Interpolators = {
   ],
 }
 
-export const colorsFromInterpolator = (interpolator, count) => {
-  if (count < 1) throw new Error('Must have at least 1 color')
+export const figmaFromHex = (hex) => {
+  const rgbobj = rgb(hex)
+  const { r, g, b } = rgbobj
+  return { r: r / 255, g: g / 255, b: b / 255 }
+}
 
-  const colors = []
-  const interpolate = chromaticScales[interpolator]
-  for (let i = 0; i < count; ++i) {
-    colors.push(rgb(interpolate(i / (count - 1))).hex())
+export const colorsFromInterpolator = ({ steps, interpolator }) => {
+  if (steps < 1) throw new Error('Must have at least 1 color')
+  const scale = scaleSequential(figmaChromaticInterpolator(interpolator))
+    .domain([0, steps])
+
+  return [...Array(steps).keys()].map(scale)
+}
+
+export const figmaChromaticInterpolator = (d3Interpolator) => {
+  const interpolator = chromaticScales[d3Interpolator]
+  return (t) => {
+    const c = interpolator(t)
+    const color = rgb(c)
+    const hex = color.hex()
+    return {
+      figma: figmaFromHex(hex),
+      d3: color,
+      hex,
+    }
   }
+}
 
 export function runFigmaAction({ action, ...props }) {
   parent.postMessage({
