@@ -14,7 +14,7 @@ yarn dev
 
 Plugins with a user interface are built as **views** and and be found in `src/views`.
 
-`views/MyViewPlugin.svelte`
+**`views/MyViewPlugin.svelte`**
 
 ```svelte
 <script>
@@ -29,7 +29,7 @@ Plugins with a user interface are built as **views** and and be found in `src/vi
 <div data-view="MyViewPlugin">Plugin body here</div>
 ```
 
-`views/index.js`
+**`views/index.js`**
 
 ```
 import MyViewPlugin from './MyViewPlugin';
@@ -39,7 +39,7 @@ export {
 }
 ```
 
-`manifest.json`
+**`manifest.json`**
 
 ```json
   "menu": [
