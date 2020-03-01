@@ -43,7 +43,6 @@ export {
 
 ```json
   "menu": [
-    ...,
     { "name": "Run my plugin", "command": "view:MyViewPlugin" }
   ]
 ```
