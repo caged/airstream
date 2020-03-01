@@ -1,7 +1,11 @@
 <script>
-  import { Input, IconAdjust, Label } from 'figma-plugin-ds-svelte'
+  import { Button, Input, IconAdjust, Label } from 'figma-plugin-ds-svelte'
   import { createEventDispatcher, onMount } from 'svelte'
-  import { Interpolators } from '../utilities'
+  import {
+    Interpolators,
+    colorsFromInterpolator,
+    runFigmaAction,
+  } from '../utilities'
   import ColorRamp from '../components/ColorRamp'
 
   let activeInterpolator = 'interpolateRainbow'
@@ -16,6 +20,14 @@
       height: 400,
     })
   })
+
+  function runPrimaryAction() {
+    const colors = colorsFromInterpolator(activeInterpolator, steps)
+    runFigmaAction({
+      action: 'generateSwatches',
+      colors,
+    })
+  }
 </script>
 
 <div data-view="ChromaticSamples">
@@ -35,6 +47,10 @@
       </div>
     {/each}
   {/each}
+  <div class="actions flex justify-content-end p-xxsmall">
+    <Button on:click={runPrimaryAction}>Generate</Button>
+  </div>
+
 </div>
 
 <style>
@@ -70,5 +86,14 @@
     border: 1px solid var(--blue);
     outline: 1px solid var(--blue);
     outline-offset: -2px;
+  }
+
+  .actions {
+    background: var(--white);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    box-shadow: var(--shadow-hud);
   }
 </style>
