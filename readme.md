@@ -32,11 +32,7 @@ Plugins with a user interface are built as **views** and and be found in `src/vi
 **`views/index.js`**
 
 ```
-import MyViewPlugin from './MyViewPlugin';
-
-export {
-  MyViewPlugin
-}
+export { default as MyViewPlugin } from './MyViewPlugin'
 ```
 
 **`manifest.json`**
