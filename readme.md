@@ -55,7 +55,7 @@ yarn test
 
 ### Credits
 
-See [package.json]() for a full list of plugins.
+See [package.json](package.json) for a full list of plugins.
 
 - Built with https://github.com/rollup/rollup
 - Built on https://github.com/sveltejs/svelte
