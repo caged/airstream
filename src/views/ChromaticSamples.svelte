@@ -68,11 +68,12 @@
 
   .name {
     font-size: var(--font-size-xsmall);
-    margin-top: 6px;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
   }
 
   .row {
-    line-height: 0;
+    line-height: 1;
     display: grid;
     grid-template-columns: minmax(0, 1fr) 256px;
     gap: 0.25rem;

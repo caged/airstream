@@ -52,3 +52,12 @@ TBD: Plugins without UIs are **commands** and can be found in `src/commands`.
 ```
 yarn test
 ```
+
+### Credits
+
+See [package.json]() for a full list of plugins.
+
+- Built with https://github.com/rollup/rollup
+- Built on https://github.com/sveltejs/svelte
+- Chromatic color schemes are from https://github.com/d3/d3-scale-chromatic.
+- Figma standard UI components and icons are from https://github.com/thomas-lowry/figma-plugin-ds-svelte
