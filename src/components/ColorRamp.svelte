@@ -2,11 +2,9 @@
   import { onMount } from 'svelte'
   import { colorsFromInterpolator } from '../utilities'
 
-  let className
   export let interpolator = 'interpolateRainbow'
   export let width = 256
   export let height = 6
-  export { className as class }
 
   let canvas
   let count = 256
@@ -22,12 +20,15 @@
 </script>
 
 <canvas
-  class={className}
   bind:this={canvas}
+  on:click
   width={256}
   height={1}
   style={`width: ${width}px; height: ${height}px`} />
 
 <style>
-
+  canvas {
+    margin: 0;
+    padding: 0;
+  }
 </style>
