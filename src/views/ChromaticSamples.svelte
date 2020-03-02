@@ -1,5 +1,11 @@
 <script>
-  import { Button, Input, IconAdjust, Label } from 'figma-plugin-ds-svelte'
+  import {
+    Button,
+    Input,
+    IconAdjust,
+    Label,
+    Number,
+  } from 'figma-plugin-ds-svelte'
   import { createEventDispatcher, onMount } from 'svelte'
   import {
     Interpolators,
@@ -35,7 +41,7 @@
 
 <div data-view="ChromaticSamples">
   <Label>Steps</Label>
-  <Input bind:value={steps} iconName={IconAdjust} />
+  <Number name="steps" bind:value={steps} iconName={IconAdjust} />
   {#each categories as category}
     <h3 class="mt-xsmall mb-xxsmall">{category}</h3>
     {#each Interpolators[category] as interpolator}
