@@ -44,17 +44,19 @@
   <Number name="steps" bind:value={steps} iconName={IconAdjust} />
   {#each categories as category}
     <h3 class="mt-xsmall mb-xxsmall">{category}</h3>
-    {#each Interpolators[category] as interpolator}
-      <div
-        class:active={activeInterpolator == interpolator}
-        on:click={() => (activeInterpolator = interpolator)}
-        class="row">
-        <div class="name">{interpolator.replace(/interpolate/, '')}</div>
-        <div class="ramp">
-          <ColorRamp {interpolator} height={12} />
+    <div class="ramps">
+      {#each Interpolators[category] as interpolator}
+        <div
+          class="row"
+          class:active={activeInterpolator == interpolator}
+          on:click={() => (activeInterpolator = interpolator)}>
+          <div class="name">{interpolator.replace(/interpolate/, '')}</div>
+          <div class="ramp">
+            <ColorRamp {interpolator} height={12} />
+          </div>
         </div>
-      </div>
-    {/each}
+      {/each}
+    </div>
   {/each}
   <div class="actions flex justify-content-end p-xxsmall">
     <Button on:click={runPrimaryAction}>Generate</Button>
@@ -76,6 +78,7 @@
     font-size: var(--font-size-xsmall);
     overflow-x: hidden;
     text-overflow: ellipsis;
+    margin-top: 1px;
   }
 
   .row {
