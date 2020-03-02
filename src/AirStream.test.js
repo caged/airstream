@@ -11,5 +11,4 @@ it('should throw an error if the view doesnt exist', () => {
   expect(() => {
     render(AirStream, { view: 'DoesNotExist' })
   }).toThrow()
-
 });
