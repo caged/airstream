@@ -2426,7 +2426,7 @@ fb-watchman@^2.0.0:
 
 "figma-plugin-ds-svelte@https://github.com/caged/figma-plugin-ds-svelte.git#compile-dist":
   version "0.1.0"
-  resolved "https://github.com/caged/figma-plugin-ds-svelte.git#29561349026d4a4b235fabccbca391979a5d17c1"
+  resolved "https://github.com/caged/figma-plugin-ds-svelte.git#096f678cdeef23f0e192ad799f026c1a29d281d5"
   dependencies:
     rollup-plugin-postcss "2.0.3"
     rollup-plugin-svg "2.0.0"
