@@ -58,3 +58,8 @@ test('should generate figma, d3, and hex colors', () => {
     }
   ])
 });
+it('should generate a random hex', () => {
+  const hex = randomHex()
+  // Regex from https://stackoverflow.com/a/1636354/26876
+  expect(hex).toMatch(/^#(?:[0-9a-fA-F]{3}){1,2}$/)
+});

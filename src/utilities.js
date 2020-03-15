@@ -1,6 +1,7 @@
 import { scaleLinear, scaleSequential } from 'd3-scale'
 import { interpolateRgb } from 'd3-interpolate'
-import { rgb } from 'd3-color'
+import { rgb, hsl } from 'd3-color'
+import { randomInt, randomUniform } from 'd3-random'
 import * as chromaticScales from 'd3-scale-chromatic'
 
 /**
@@ -94,4 +95,7 @@ export function runFigmaAction({ action, ...props }) {
       ...props
     }
   }, '*')
+}
+export function randomHex() {
+  return hsl(randomInt(0, 360)(), randomUniform()(), randomUniform()()).hex()
 }
