@@ -32,8 +32,16 @@
 <div data-view="ColorBlend">
   <Label>Steps</Label>
   <Number name="steps" bind:value={steps} iconName={IconAdjust} />
-  <ColorInput bind:value={color} />
+  <div class="color-inputs">
+    <ColorInput bind:value={color} />
+  </div>
   <div class="actions flex justify-content-end p-xxsmall">
     <Button on:click={runPrimaryAction}>Generate</Button>
   </div>
 </div>
+
+<style>
+  .color-inputs {
+    width: 50%;
+  }
+</style>
