@@ -47,16 +47,13 @@
   .focused {
     border: 1px solid var(--blue);
     outline: 1px solid var(--blue);
-    outline-offset: -2px;
-    /* border-color: var(--blue);
-    box-shadow: 0 0 1px 0 var(--blue); */
   }
 
   .color {
     -webkit-appearance: none;
     outline: none;
     border: none;
-    width: 25px;
+    width: 27px;
     height: 25px;
     margin: 0 0 0 2px;
   }
