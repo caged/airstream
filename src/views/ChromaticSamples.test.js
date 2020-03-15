@@ -34,9 +34,7 @@ test('runs action with the given steps and interpolator', async () => {
   const { container, getByText } = render(ChromaticSamples)
 
   const btn = getByText('Generate')
-  fireEvent.click(btn)
-
-  await wait()
+  await fireEvent.click(btn)
 
   const message = callback.mock.calls[0][0].pluginMessage
   expect(callback).toHaveBeenCalledTimes(1)

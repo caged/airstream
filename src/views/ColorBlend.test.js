@@ -41,3 +41,17 @@ it('removes a new color', async () => {
   colors = container.querySelectorAll('.color-input')
   expect(colors).toHaveLength(2)
 });
+
+test('runs action with the given steps and colors', async () => {
+  const callback = jest.fn()
+  parent.postMessage = callback
+  const { getByText } = render(ColorBlend)
+
+  const btn = getByText('Generate')
+  await fireEvent.click(btn)
+
+  const message = callback.mock.calls[0][0].pluginMessage
+  expect(callback).toHaveBeenCalledTimes(1)
+  expect(message).toMatchObject({ action: 'generateSwatches' })
+  expect(message.colors).toHaveLength(9)
+})
