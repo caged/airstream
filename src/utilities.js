@@ -90,16 +90,20 @@ export function colorsFromColors({ steps, colors }) {
   return [...Array(steps).keys()].map(scale)
 }
 
+export function colorSpread(rgbstr) {
+  const color = rgb(rgbstr)
+  const hex = color.hex()
+  return {
+    figma: figmaFromHex(hex),
+    d3: color,
+    hex,
+  }
+}
+
 export const figmaInterpolator = (c1, c2) => {
   return (t) => {
     const c = interpolateRgb(c1, c2)(t)
-    const color = rgb(c)
-    const hex = color.hex()
-    return {
-      figma: figmaFromHex(hex),
-      d3: color,
-      hex,
-    }
+    return colorSpread(c)
   }
 }
 
@@ -107,13 +111,7 @@ export const figmaChromaticInterpolator = (d3Interpolator) => {
   const interpolator = chromaticScales[d3Interpolator]
   return (t) => {
     const c = interpolator(t)
-    const color = rgb(c)
-    const hex = color.hex()
-    return {
-      figma: figmaFromHex(hex),
-      d3: color,
-      hex,
-    }
+    return colorSpread(c)
   }
 }
 

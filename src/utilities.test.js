@@ -6,7 +6,8 @@ import {
   figmaChromaticInterpolator,
   figmaFromHex,
   randomHex,
-  colorsFromColors
+  colorsFromColors,
+  colorSpread
 } from './utilities'
 import { text } from 'svelte/internal';
 
@@ -74,4 +75,12 @@ it('should generate a random hex', () => {
   const hex = randomHex()
   // Regex from https://stackoverflow.com/a/1636354/26876
   expect(hex).toMatch(/^#(?:[0-9a-fA-F]{3}){1,2}$/)
+});
+
+it('should generate figma, d3, and hex colors from a rgb string', () => {
+  const { d3, figma, hex } = colorSpread('rgb(255, 255, 255)')
+
+  expect(d3).toEqual({ r: 255, g: 255, b: 255, opacity: 1 })
+  expect(figma).toEqual({ r: 1, g: 1, b: 1 })
+  expect(hex).toEqual('#ffffff')
 });
