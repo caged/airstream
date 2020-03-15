@@ -32,26 +32,44 @@
 </script>
 
 <div data-view="ColorBlend">
-  <div class="add-button">
-    <IconButton iconName={IconPlus} />
+  <div class="adjustments flex">
+    <div class="flex-1">
+      <span class="label">Steps</span>
+      <div class="inline">
+        <Number name="steps" bind:value={steps} />
+      </div>
+    </div>
+    <div class="align-self-end">
+      <IconButton iconName={IconPlus} />
+    </div>
   </div>
 
-  <Label>Steps</Label>
-  <Number name="steps" bind:value={steps} iconName={IconAdjust} />
   <div class="color-inputs">
     <ColorInput bind:value={color} />
   </div>
+
   <div class="actions flex justify-content-end p-xxsmall">
     <Button on:click={runPrimaryAction}>Generate</Button>
   </div>
 </div>
 
 <style>
-  .color-inputs {
-    width: 50%;
+  .label {
+    font-size: var(--font-size-xsmall);
+    color: var(--black3);
+    user-select: none;
   }
 
-  .add-button {
-    float: right;
+  .flex-1 {
+    flex: 1 1 0%;
+  }
+
+  .inline {
+    display: inline-block;
+  }
+
+  .color-inputs {
+    margin-top: var(--size-xxsmall);
+    width: 50%;
   }
 </style>
