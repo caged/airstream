@@ -1,6 +1,5 @@
 import { render, fireEvent, wait } from '@testing-library/svelte'
 import ChromaticSamples from './ChromaticSamples'
-import * as utilities from '../utilities'
 
 beforeEach(() => {
   jest.clearAllMocks()
