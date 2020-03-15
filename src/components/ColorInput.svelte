@@ -1,12 +1,27 @@
 <script>
   export let value = '#cccccc'
 
-  $: figmaValue = value.toUpperCase().replace(/#/, '')
+  $: figmaValue = value.replace(/#/, '')
+
+  function handleFocus(event) {
+    event.target.select()
+  }
+
+  function handleKeyDown(event) {
+    if (event.keyCode === 13) {
+      value = `#${figmaValue}`
+    }
+  }
 </script>
 
 <div class="input flex justify-content-start">
   <input bind:value type="color" class="color" />
-  <input type="text" bind:value={figmaValue} class="text" />
+  <input
+    type="text"
+    bind:value={figmaValue}
+    on:focus={handleFocus}
+    on:keydown={handleKeyDown}
+    class="text" />
 </div>
 
 <style>
@@ -51,5 +66,6 @@
     border-radius: var(--border-radius-small);
     outline: none;
     background-color: var(--white);
+    text-transform: uppercase;
   }
 </style>
