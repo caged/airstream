@@ -67,11 +67,40 @@ export const figmaFromHex = (hex) => {
 }
 
 export const colorsFromInterpolator = ({ steps, interpolator }) => {
-  if (steps < 1) throw new Error('Must have at least 1 color')
+  if (steps < 1) {
+    throw new Error('Must have at least 1 color')
+  }
+
   const scale = scaleSequential(figmaChromaticInterpolator(interpolator))
     .domain([0, steps])
 
   return [...Array(steps).keys()].map(scale)
+}
+
+export function colorsFromColors({ steps, colors }) {
+  const domain = colors
+    .map((_, i) => (i === 0 ? 0 : (steps - 1) / i))
+    .sort((a, b) => a - b)
+
+  const scale = scaleLinear()
+    .domain(domain)
+    .range(colors)
+    .interpolate(figmaInterpolator)
+
+  return [...Array(steps).keys()].map(scale)
+}
+
+export const figmaInterpolator = (c1, c2) => {
+  return (t) => {
+    const c = interpolateRgb(c1, c2)(t)
+    const color = rgb(c)
+    const hex = color.hex()
+    return {
+      figma: figmaFromHex(hex),
+      d3: color,
+      hex,
+    }
+  }
 }
 
 export const figmaChromaticInterpolator = (d3Interpolator) => {
@@ -96,6 +125,7 @@ export function runFigmaAction({ action, ...props }) {
     }
   }, '*')
 }
+
 export function randomHex() {
   return hsl(randomInt(0, 360)(), randomUniform()(), randomUniform()()).hex()
 }

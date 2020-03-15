@@ -4,12 +4,15 @@ import { interpolateBlues } from 'd3-scale-chromatic'
 import {
   colorsFromInterpolator,
   figmaChromaticInterpolator,
-  figmaFromHex
+  figmaFromHex,
+  randomHex,
+  colorsFromColors
 } from './utilities'
+import { text } from 'svelte/internal';
 
 const blueHexAtPos = (i) => rgb(interpolateBlues(i)).hex()
 
-test('should generate figma rgb from hex values', () => {
+it('should generate figma rgb from hex values', () => {
   expect(figmaFromHex('#ffffff')).toEqual({
     r: 1, g: 1, b: 1
   })
@@ -23,7 +26,7 @@ test('should generate figma rgb from hex values', () => {
   })
 });
 
-test('figmaChromaticInterpolator should generate color for the given interpolator', () => {
+it('figmaChromaticInterpolator should generate color for the given interpolator', () => {
   for (const pos of [0, 0.5, 1]) {
     const color = figmaChromaticInterpolator('interpolateBlues')(pos)
     const hval = blueHexAtPos(pos)
@@ -36,13 +39,13 @@ test('figmaChromaticInterpolator should generate color for the given interpolato
   }
 })
 
-test('should generate colors for interpolator', () => {
+it('should generate colors for interpolator', () => {
   const colors = colorsFromInterpolator({ steps: 3, interpolator: 'interpolateGreys' })
   expect(colors).toHaveLength(3)
 });
 
 
-test('should generate figma, d3, and hex colors', () => {
+it('should generate figma, d3, and hex colors', () => {
   const colors = colorsFromInterpolator({ steps: 2, interpolator: 'interpolateGreys' })
   expect(colors).toHaveLength(2)
   expect(colors).toEqual([
@@ -58,6 +61,15 @@ test('should generate figma, d3, and hex colors', () => {
     }
   ])
 });
+
+it('should generate swatches between colors', () => {
+  const colors = colorsFromColors({ steps: 3, colors: ['#fff', '#ccc'] })
+  const hexes = colors.map(c => c.hex)
+
+  expect(hexes).toHaveLength(3)
+  expect(hexes).toEqual(['#ffffff', '#e6e6e6', '#cccccc'])
+});
+
 it('should generate a random hex', () => {
   const hex = randomHex()
   // Regex from https://stackoverflow.com/a/1636354/26876
