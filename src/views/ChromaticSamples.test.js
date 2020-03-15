@@ -1,4 +1,4 @@
-import { render, fireEvent, wait } from '@testing-library/svelte'
+import { render, fireEvent } from '@testing-library/svelte'
 import ChromaticSamples from './ChromaticSamples'
 
 beforeEach(() => {
@@ -20,9 +20,7 @@ test('sets the active color ramp', async () => {
   expect(el).not.toHaveClass('active')
   expect(el.querySelector('.name')).toHaveTextContent('Sinebow')
 
-  fireEvent.click(el)
-
-  await wait()
+  await fireEvent.click(el)
 
   expect(el).toHaveClass('active')
 })
@@ -49,10 +47,8 @@ test('should generate colors with the given number of steps', async () => {
   const input = container.querySelector('input[name="steps"]')
   const btn = getByText('Generate')
 
-  fireEvent.input(input, { target: { value: 3 } })
-  fireEvent.click(btn)
-
-  await wait()
+  await fireEvent.input(input, { target: { value: 3 } })
+  await fireEvent.click(btn)
 
   const message = callback.mock.calls[0][0].pluginMessage
   expect(message.colors).toHaveLength(3)
