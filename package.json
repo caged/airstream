@@ -5,7 +5,7 @@
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
-    "test": "jest --clear-cache && jest"
+    "test": "jest"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
@@ -31,7 +31,7 @@
     "rollup-plugin-svg": "^2.0.0",
     "rollup-plugin-terser": "^5.1.2",
     "rollup-plugin-typescript": "^1.0.1",
-    "svelte": "^3.19.0",
+    "svelte": "^3.19.2",
     "svelte-jester": "^1.0.4",
     "tslib": "^1.11.0",
     "typescript": "^3.8.2"
@@ -39,6 +39,7 @@
   "dependencies": {
     "d3-color": "^1.4.0",
     "d3-interpolate": "^1.4.0",
+    "d3-random": "^2.1.0",
     "d3-scale": "^3.2.1",
     "d3-scale-chromatic": "^1.5.0"
   }

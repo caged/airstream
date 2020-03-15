@@ -1,6 +1,7 @@
 import { scaleLinear, scaleSequential } from 'd3-scale'
 import { interpolateRgb } from 'd3-interpolate'
-import { rgb } from 'd3-color'
+import { rgb, hsl } from 'd3-color'
+import { randomInt, randomNormal } from 'd3-random'
 import * as chromaticScales from 'd3-scale-chromatic'
 
 /**
@@ -66,24 +67,51 @@ export const figmaFromHex = (hex) => {
 }
 
 export const colorsFromInterpolator = ({ steps, interpolator }) => {
-  if (steps < 1) throw new Error('Must have at least 1 color')
+  if (steps < 1) {
+    throw new Error('Must have at least 1 color')
+  }
+
   const scale = scaleSequential(figmaChromaticInterpolator(interpolator))
     .domain([0, steps])
 
   return [...Array(steps).keys()].map(scale)
 }
 
+export function colorsFromColors({ steps, colors }) {
+  const domain = colors
+    .map((_, i) => (i === 0 ? 0 : (steps - 1) / i))
+    .sort((a, b) => a - b)
+
+  const scale = scaleLinear()
+    .domain(domain)
+    .range(colors)
+    .interpolate(figmaInterpolator)
+
+  return [...Array(steps).keys()].map(scale)
+}
+
+export function colorSpread(rgbstr) {
+  const color = rgb(rgbstr)
+  const hex = color.hex()
+  return {
+    figma: figmaFromHex(hex),
+    d3: color,
+    hex,
+  }
+}
+
+export const figmaInterpolator = (c1, c2) => {
+  return (t) => {
+    const c = interpolateRgb(c1, c2)(t)
+    return colorSpread(c)
+  }
+}
+
 export const figmaChromaticInterpolator = (d3Interpolator) => {
   const interpolator = chromaticScales[d3Interpolator]
   return (t) => {
     const c = interpolator(t)
-    const color = rgb(c)
-    const hex = color.hex()
-    return {
-      figma: figmaFromHex(hex),
-      d3: color,
-      hex,
-    }
+    return colorSpread(c)
   }
 }
 
@@ -94,4 +122,11 @@ export function runFigmaAction({ action, ...props }) {
       ...props
     }
   }, '*')
+}
+
+const rns = randomNormal(0.4, 0.1)
+const rnl = randomNormal(0.4, 0.1)
+const ri = randomInt(0, 360)
+export function randomHex() {
+  return hsl(ri(), rns(), rnl()).hex()
 }
