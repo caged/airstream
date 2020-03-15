@@ -1,10 +1,16 @@
 <script>
   export let value = '#cccccc'
+  let focused = false
 
   $: figmaValue = value.replace(/#/, '')
 
   function handleFocus(event) {
     event.target.select()
+    focused = true
+  }
+
+  function handleBlur(event) {
+    focused = false
   }
 
   function handleKeyDown(event) {
@@ -14,12 +20,13 @@
   }
 </script>
 
-<div class="input flex justify-content-start">
+<div class="input flex justify-content-start" class:focused>
   <input bind:value type="color" class="color" />
   <input
     type="text"
     bind:value={figmaValue}
     on:focus={handleFocus}
+    on:blur={handleBlur}
     on:keydown={handleKeyDown}
     class="text" />
 </div>
@@ -27,12 +34,22 @@
 <style>
   .input {
     border: 1px solid transparent;
-    border-radius: 3px;
+    border-radius: var(--border-radius-small);
     line-height: var(--line-height);
+    outline-width: 1px;
+    outline-color: transparent;
   }
 
-  .input:hover {
+  .input:not(.focused):hover {
     border: 1px solid var(--black1);
+  }
+
+  .focused {
+    border: 1px solid var(--blue);
+    outline: 1px solid var(--blue);
+    outline-offset: -2px;
+    /* border-color: var(--blue);
+    box-shadow: 0 0 1px 0 var(--blue); */
   }
 
   .color {
@@ -48,10 +65,6 @@
     border: none;
   }
 
-  .color:hover {
-    border-color: #e1e1e1;
-  }
-
   .text {
     font-size: var(--font-size-xsmall);
     font-weight: var(--font-weight-normal);
@@ -61,6 +74,7 @@
     overflow: visible;
     align-items: center;
     width: 100%;
+    margin: 1px;
     color: var(--black8);
     border: 1px solid transparent;
     border-radius: var(--border-radius-small);

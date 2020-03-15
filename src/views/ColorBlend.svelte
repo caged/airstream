@@ -5,6 +5,8 @@
     Button,
     Input,
     IconAdjust,
+    IconPlus,
+    IconButton,
     Label,
     Number,
   } from 'figma-plugin-ds-svelte'
@@ -30,6 +32,10 @@
 </script>
 
 <div data-view="ColorBlend">
+  <div class="add-button">
+    <IconButton iconName={IconPlus} />
+  </div>
+
   <Label>Steps</Label>
   <Number name="steps" bind:value={steps} iconName={IconAdjust} />
   <div class="color-inputs">
@@ -43,5 +49,9 @@
 <style>
   .color-inputs {
     width: 50%;
+  }
+
+  .add-button {
+    float: right;
   }
 </style>
