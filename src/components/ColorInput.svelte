@@ -10,6 +10,7 @@
   }
 
   function handleBlur(event) {
+    value = `#${figmaValue}`
     focused = false
   }
 
