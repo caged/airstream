@@ -40,28 +40,31 @@
 </script>
 
 <div data-view="ChromaticSamples">
-  <Label>Steps</Label>
-  <Number name="steps" bind:value={steps} iconName={IconAdjust} />
-  {#each categories as category}
-    <h3 class="mt-xsmall mb-xxsmall">{category}</h3>
-    <div class="ramps">
-      {#each Interpolators[category] as interpolator}
-        <div
-          class="row"
-          class:active={activeInterpolator == interpolator}
-          on:click={() => (activeInterpolator = interpolator)}>
-          <div class="name">{interpolator.replace(/interpolate/, '')}</div>
-          <div class="ramp">
-            <ColorRamp {interpolator} height={12} />
+  <div class="mb-xxsmall">
+    <Label>Steps</Label>
+    <Number name="steps" bind:value={steps} iconName={IconAdjust} />
+  </div>
+  <div class="categories">
+    {#each categories as category}
+      <h3 class="mt-xsmall mb-xxsmall">{category}</h3>
+      <div class="ramps">
+        {#each Interpolators[category] as interpolator}
+          <div
+            class="row"
+            class:active={activeInterpolator == interpolator}
+            on:click={() => (activeInterpolator = interpolator)}>
+            <div class="name">{interpolator.replace(/interpolate/, '')}</div>
+            <div class="ramp">
+              <ColorRamp {interpolator} height={12} />
+            </div>
           </div>
-        </div>
-      {/each}
-    </div>
-  {/each}
+        {/each}
+      </div>
+    {/each}
+  </div>
   <div class="actions flex justify-content-end p-xxsmall">
     <Button on:click={runPrimaryAction}>Generate</Button>
   </div>
-
 </div>
 
 <style>
@@ -79,6 +82,10 @@
     overflow-x: hidden;
     text-overflow: ellipsis;
     margin-top: 1px;
+  }
+
+  .categories {
+    margin-bottom: 45px;
   }
 
   .row {
@@ -107,6 +114,6 @@
     bottom: 0;
     left: 0;
     right: 0;
-    box-shadow: var(--shadow-hud);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
   }
 </style>
