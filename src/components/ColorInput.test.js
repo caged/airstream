@@ -1,6 +1,5 @@
-import { render, fireEvent, wait, act } from '@testing-library/svelte'
+import { render, fireEvent } from '@testing-library/svelte'
 import ColorInput from './ColorInput'
-import { tick } from 'svelte';
 
 it('should render a color input', () => {
   const { container } = render(ColorInput)
@@ -8,7 +7,7 @@ it('should render a color input', () => {
 });
 
 it('should set the input color', async () => {
-  const { container, component } = render(ColorInput)
+  const { container } = render(ColorInput)
 
   const input = container.querySelector('.color')
   await fireEvent.input(input, { target: { value: '#cc0000' } })
@@ -18,7 +17,7 @@ it('should set the input color', async () => {
 });
 
 it('should set sync color and text inputs', async () => {
-  const { container, component } = render(ColorInput)
+  const { container } = render(ColorInput)
   const color = container.querySelector('.color')
   const text = container.querySelector('.text')
 
@@ -35,7 +34,7 @@ it('should set sync color and text inputs', async () => {
 });
 
 it('should set color when pressing enter on text', async () => {
-  const { container, component } = render(ColorInput)
+  const { container } = render(ColorInput)
   const color = container.querySelector('.color')
   const text = container.querySelector('.text')
 
@@ -50,4 +49,16 @@ it('should set color when pressing enter on text', async () => {
 
   expect(color).not.toHaveValue('#FF00FF')
   expect(text).toHaveValue('FF00FF')
+});
+
+it('should focus the element when focusing the input', async () => {
+  const { container } = render(ColorInput)
+  const input = container.querySelector('.input')
+  const text = container.querySelector('.text')
+
+  expect(input).not.toHaveClass('focused')
+
+  await fireEvent.focus(text)
+
+  expect(input).toHaveClass('focused')
 });
