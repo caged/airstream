@@ -50,3 +50,15 @@ it('should set color when pressing enter on text', async () => {
   expect(color).not.toHaveValue('#FF00FF')
   expect(text).toHaveValue('FF00FF')
 });
+
+it('should focus the element when focusing the input', async () => {
+  const { container } = render(ColorInput)
+  const input = container.querySelector('.input')
+  const text = container.querySelector('.text')
+
+  expect(input).not.toHaveClass('focused')
+
+  await fireEvent.focus(text)
+
+  expect(input).toHaveClass('focused')
+});
