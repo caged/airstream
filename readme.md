@@ -1,3 +1,5 @@
+![](/splash.png)
+
 ## Airstream
 
 Color tools for Figma.
