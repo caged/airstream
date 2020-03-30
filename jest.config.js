@@ -3,13 +3,13 @@ module.exports = {
   // Coverage is broken for svelte files.
   // See https://github.com/facebook/jest/issues/9490
   //
-  // collectCoverage: true,
-  // coveragePathIgnorePatterns: [
-  //   "./*.config.js"
-  // ],
-  // collectCoverageFrom: [
-  //   "*.svelte"
-  // ],
+  collectCoverage: true,
+  coveragePathIgnorePatterns: [
+    "./*.config.js"
+  ],
+  collectCoverageFrom: [
+    "./src/**/*.svelte"
+  ],
   moduleFileExtensions: ['js', 'svelte'],
   "moduleNameMapper": {
     "^.+\\.css$": "identity-obj-proxy"
