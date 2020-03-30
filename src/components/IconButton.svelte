@@ -6,7 +6,7 @@
   let btn
 
   function blur() {
-    btn.blur()
+    // btn.blur()
   }
 </script>
 
