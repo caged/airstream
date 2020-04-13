@@ -8,6 +8,7 @@
     "test": "jest"
   },
   "devDependencies": {
+    "acorn": ">=6.4.1",
     "@babel/core": "^7.9.0",
     "@babel/preset-env": "^7.9.5",
     "@rollup/plugin-commonjs": "^11.1.0",
