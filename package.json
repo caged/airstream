@@ -22,7 +22,7 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^25.3.0",
     "jest-canvas-mock": "^2.2.0",
-    "minimist": ">=1.2.3",
+    "minimist": ">=1.2.6",
     "prettier": "^2.0.4",
     "prettier-plugin-svelte": "^0.7.0",
     "rollup": "^2.6.1",
